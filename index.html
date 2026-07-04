@@ -28,10 +28,10 @@
 
   /* masthead */
   .masthead{ padding-top:calc(18px + env(safe-area-inset-top)); }
-  .masthead .row{ display:flex; justify-content:space-between; align-items:center; }
+  .masthead .row{ display:flex; flex-direction:column; align-items:flex-start; gap:6px; }
   .wordmark{ font-weight:700; font-size:16px; letter-spacing:-0.01em; color:var(--ink-strong); }
   .hero-logo{ font-weight:700; font-size:22px; letter-spacing:-0.02em; color:var(--ink-strong); margin:2px 0 24px; }
-  .masthead .section{ font-size:9px; font-weight:600; letter-spacing:0.24em; text-transform:uppercase; color:var(--body); }
+  .masthead .section{ font-size:9px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--body); line-height:1.5; max-width:280px; }
   .masthead .line{ height:1px; background:var(--hairline); margin-top:12px; }
   .backtoslides{ display:inline-flex; align-items:center; gap:5px; margin-top:8px; font-size:10px; font-weight:600;
     letter-spacing:0.1em; color:var(--body); text-decoration:none; }
@@ -186,6 +186,14 @@
   .savehint.show{ display:block; }
   .donote{ margin-top:22px; text-align:center; font-family:var(--serif); font-style:italic; font-size:14px; color:var(--body); line-height:1.6; }
   .donote b{ font-style:normal; font-weight:560; color:var(--ink-strong); }
+
+  /* ask-a-question prompt — ties the finale card's payoff to the qa-fab flow */
+  .qa-prompt{ margin-top:24px; background:var(--ink-strong); border-left:3px solid var(--accent); padding:18px 20px; text-align:left; cursor:pointer; border-radius:0; width:100%; }
+  .qa-prompt .qpk{ font-size:9px; font-weight:600; letter-spacing:0.24em; text-transform:uppercase; color:var(--accent-tint); }
+  .qa-prompt .qpt{ margin-top:8px; font-family:var(--serif); font-optical-sizing:auto; font-size:15.5px; font-weight:480; line-height:1.5; color:#fff; }
+  .qa-prompt .qpt b{ font-weight:600; color:var(--accent-tint); }
+  .qa-prompt:active{ opacity:.85; }
+
   .endlinks{ margin-top:22px; }
   .biglink{ display:flex; align-items:center; justify-content:center; width:100%; padding:17px 18px; font-family:var(--sans); font-size:12.5px; font-weight:600;
     letter-spacing:0.14em; text-transform:uppercase; text-decoration:none; text-align:center; border-radius:0; transition:opacity .2s, background .2s; }
@@ -517,11 +525,14 @@
         '<div class="rc-foot"><span>'+esc(fin.footer||b.name||"")+"</span></div></div></div>"+
       '<div class="savehint" id="saveHint">Couldn’t render the image on this phone — just screenshot this card. It’s yours.</div>'+
       '<div class="actions"><button class="btn primary" id="saveImg">Save as image</button><button class="btn ghost" id="done">Done</button></div>'+
+      '<button type="button" class="qa-prompt" id="cardQaPrompt"><div class="qpk">One more thing</div>'+
+        '<div class="qpt">Got a question? <b>Ask it — it pops up live on the slides.</b> Tap here, send it, and watch it land on the room map.</div></button>'+
       (links?'<div class="endlinks">'+links+"</div>":"")+
       '<p class="donote" id="doneNote" style="display:none">'+(fin.note||"All set.")+"</p></div>";
     bindBack(function(){ nav(prevScreen("card")); });
     document.getElementById("saveImg").addEventListener("click", saveCardImage);
     document.getElementById("done").addEventListener("click", function(){ document.getElementById("doneNote").style.display=""; document.getElementById("done").style.display="none"; });
+    document.getElementById("cardQaPrompt").addEventListener("click", function(){ qaFab.click(); });
   }
   function saveCardImage(){
     var btn=document.getElementById("saveImg"); btn.disabled=true; btn.textContent="Rendering…";

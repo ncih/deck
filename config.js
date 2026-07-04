@@ -48,8 +48,8 @@ window.DECK_CONFIG = {
     // shown on the finale card end-screen + the deck's closing slide:
     links: [
       { label: "See the room →",         href: "presenter.html", primary: true },
-      { label: "Get the template →",     href: "#", primary: false }, // TODO(nicholas): template repo URL
-      { label: "See how it's built →",   href: "#", primary: false }  // TODO(nicholas): README/how-to URL
+      { label: "Get the template →",     href: "https://github.com/ncih/deck/generate", primary: false },
+      { label: "See how it's built →",   href: "https://github.com/ncih/deck", primary: false }
     ]
   },
 

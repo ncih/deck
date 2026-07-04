@@ -183,6 +183,20 @@
   .edit-demo p{ font-size:18px; color:rgba(250,248,242,.82); line-height:1.5; }
   .edit-demo p b{ color:var(--paper); }
 
+  /* ================================ SLIDE 7 · THE THREE PIECES ================================ */
+  .pieces-stage{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .pieces-list{ margin-top:44px; display:flex; flex-direction:column; gap:20px; }
+  .piece-row{ display:flex; align-items:center; gap:32px; padding:30px 36px; text-decoration:none; }
+  .piece-num{ font-family:"Space Mono", var(--mono), monospace; font-weight:700; font-size:22px; color:var(--blue); flex:none; }
+  .piece-body{ flex:1; }
+  .piece-body h3{ font-family:"Bricolage Grotesque", var(--serif), serif; font-weight:800; font-size:27px; color:var(--ink); }
+  .piece-body p{ margin-top:8px; font-size:18px; color:var(--muted); line-height:1.5; }
+  .piece-url{ margin-top:10px; font-family:"Space Mono", var(--mono), monospace; font-size:14px; color:var(--blue); }
+  .piece-cta{ flex:none; display:inline-flex; align-items:center; gap:8px; font-family:"Space Mono", var(--mono), monospace; font-weight:700; font-size:16px; letter-spacing:.04em; color:var(--paper); background:var(--ink); border:var(--bw) solid var(--ink); box-shadow:5px 5px 0 var(--blue); padding:14px 22px; transition:transform .15s var(--ease), box-shadow .15s var(--ease); }
+  .piece-row:hover .piece-cta{ transform:translate(3px,3px); box-shadow:2px 2px 0 var(--blue); }
+  .pieces-note{ margin-top:34px; font-size:22px; color:var(--ink); font-weight:600; }
+  .pieces-note em{ font-style:normal; color:var(--blue); }
+
   /* ================================ SLIDE 8 · TWO WAYS TO SET IT UP ================================ */
   .setup-stage{ flex:1; display:flex; flex-direction:column; justify-content:center; }
   .setup-row{ display:flex; gap:32px; margin-top:40px; align-items:stretch; }
@@ -206,6 +220,36 @@
   .s9-card-cta .btnlink{ justify-content:center; font-size:18px; padding:15px 22px; box-shadow:5px 5px 0 var(--yellow); }
   .s9-card-cta .btnlink.ghost{ background:transparent; color:var(--paper); border-color:var(--paper); box-shadow:none; }
   .s9-card-cta .btnlink.ghost:hover{ background:rgba(250,248,242,.08); transform:none; }
+
+  /* ================================ LIVE Q&A FROM THE ROOM ================================ */
+  .qa-fab{ position:fixed; left:26px; bottom:24px; z-index:1400; display:none; align-items:center; gap:12px;
+    padding:14px 22px 14px 18px; border:var(--bw) solid var(--ink); border-radius:999px; background:var(--ink); color:var(--paper);
+    font-family:"Space Mono", var(--mono), monospace; font-size:14px; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
+    cursor:pointer; box-shadow:5px 5px 0 var(--yellow); transition:transform .15s var(--ease), box-shadow .15s var(--ease); }
+  .qa-fab.show{ display:inline-flex; }
+  .qa-fab:hover{ transform:translate(3px,3px); box-shadow:2px 2px 0 var(--yellow); }
+  .qa-fab .qa-dot{ position:relative; width:11px; height:11px; border-radius:50%; background:var(--yellow); flex:none; }
+  .qa-fab .qa-dot::after{ content:""; position:absolute; inset:-5px; border-radius:50%; border:2px solid var(--yellow); animation:qa-pulse 2s ease-out infinite; }
+  @keyframes qa-pulse{ 0%{opacity:.7; transform:scale(.7);} 70%{opacity:0; transform:scale(1.6);} 100%{opacity:0; transform:scale(1.6);} }
+  .qa-fab .qa-count{ font-family:"Bricolage Grotesque", var(--serif), serif; font-weight:800; font-size:16px; min-width:18px; text-align:center; }
+
+  .qa-overlay{ position:fixed; inset:0; z-index:1500; display:none; flex-direction:column; background:rgba(250,248,242,.985); color:var(--ink); padding:88px 110px; overflow-y:auto; }
+  .qa-overlay.open{ display:flex; }
+  .qa-overlay .qa-head{ display:flex; align-items:baseline; justify-content:space-between; border-bottom:var(--bw) solid var(--ink); padding-bottom:22px; margin-bottom:8px; }
+  .qa-overlay .qa-title{ font-family:"Bricolage Grotesque", var(--serif), serif; font-weight:800; font-size:44px; letter-spacing:-0.02em; color:var(--ink); }
+  .qa-overlay .qa-title em{ font-style:normal; color:var(--blue); }
+  .qa-close{ border:var(--bw) solid var(--ink); background:var(--paper); color:var(--ink); width:52px; height:52px; border-radius:50%;
+    font-size:26px; line-height:1; cursor:pointer; flex:none; box-shadow:4px 4px 0 var(--ink); transition:background .14s ease, color .14s ease, transform .14s ease; }
+  .qa-close:hover{ background:var(--ink); color:var(--paper); transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink); }
+  .qa-list{ list-style:none; margin:0; padding:0; max-width:1500px; }
+  .qa-list li{ border-bottom:1.5px solid rgba(10,10,10,.14); padding:30px 6px; cursor:pointer; transition:opacity .16s ease, padding-left .16s ease; }
+  .qa-list li:hover{ padding-left:20px; opacity:.6; }
+  .qa-list li.answering{ opacity:0; }
+  .qa-list .qa-q{ font-family:"Bricolage Grotesque", var(--serif), serif; font-weight:700; font-size:34px; line-height:1.25; color:var(--ink); margin:0 0 12px; }
+  .qa-list .qa-who{ font-family:"Space Mono", var(--mono), monospace; font-size:15px; letter-spacing:.04em; color:var(--muted); }
+  .qa-list .qa-who b{ color:var(--blue); font-weight:700; }
+  .qa-empty{ margin-top:40px; font-family:"Space Mono", var(--mono), monospace; font-size:16px; color:var(--muted); }
+  .qa-hint{ font-family:"Space Mono", var(--mono), monospace; font-size:14px; letter-spacing:.04em; color:var(--muted); margin-top:26px; }
 
   /* ================================ INLINE EDIT MODE ================================ */
   .edit-hotzone{ position:fixed; top:0; left:0; width:84px; height:84px; z-index:10000; cursor:pointer; }
@@ -362,22 +406,46 @@
       </div>
     </section>
 
-    <!-- ============================ 7 · WHY IT MATTERS ============================ -->
+    <!-- ============================ 7 · THE THREE PIECES ============================ -->
     <section class="slide">
       <div class="pad">
-        <div class="masthead"><div class="wm" data-brand></div><div class="section">Why it matters</div></div>
+        <div class="masthead"><div class="wm" data-brand></div><div class="section">What you just used</div></div>
         <div class="rule"></div>
-        <div class="why-stage">
-          <div class="kicker reveal r1">If you present for a living</div>
-          <h1 class="reveal r2" style="font-size:62px; margin-top:22px;">Stop losing the room the<br>second you <em>stop talking.</em></h1>
-          <div class="why-grid reveal r3">
-            <div class="why-card card"><div class="n">01</div><h3>You already did the hard part</h3><p>You got people in a room and held their attention. Walking out with nothing but a warm feeling is a waste of that.</p></div>
-            <div class="why-card card on-blue"><div class="n">02</div><h3>Every talk feeds the pipeline</h3><p>A pitch, a workshop, a conference session — each one quietly hands you a qualified list, sorted by what people actually said.</p></div>
-            <div class="why-card card"><div class="n">03</div><h3>No booth, no scanner, no chase</h3><p>Nobody's swapping cards or hoping the badge scanner synced. The follow-up list builds itself while you speak.</p></div>
+        <div class="pieces-stage">
+          <div class="kicker reveal r1">Three screens, one talk</div>
+          <h1 class="reveal r2" style="font-size:62px; margin-top:22px;">Every talk ships with <em>three pieces.</em></h1>
+          <p class="lead reveal r3" style="margin-top:18px; font-size:24px;">All three are live in this demo — open any of them.</p>
+          <div class="pieces-list reveal r4">
+            <a class="piece-row card" href="deck.html" target="_blank" rel="noopener">
+              <div class="piece-num">01</div>
+              <div class="piece-body">
+                <h3>The deck</h3>
+                <p>Your slides — what you're looking at right now.</p>
+                <div class="piece-url">deck.nicholaschong.xyz/deck.html</div>
+              </div>
+              <div class="piece-cta">Open the deck →</div>
+            </a>
+            <a class="piece-row card on-blue" href="index.html" target="_blank" rel="noopener">
+              <div class="piece-num" style="color:var(--yellow);">02</div>
+              <div class="piece-body">
+                <h3>The audience companion</h3>
+                <p>What the room opens on their phones.</p>
+                <div class="piece-url" style="color:var(--yellow);">deck.nicholaschong.xyz/index.html</div>
+              </div>
+              <div class="piece-cta" style="box-shadow:5px 5px 0 var(--yellow);">Open the companion →</div>
+            </a>
+            <a class="piece-row card" href="presenter.html" target="_blank" rel="noopener">
+              <div class="piece-num">03</div>
+              <div class="piece-body">
+                <h3>The presenter view</h3>
+                <p>Your live room-map and Q&amp;A while you talk.</p>
+                <div class="piece-url">deck.nicholaschong.xyz/presenter.html</div>
+              </div>
+              <div class="piece-cta">Open the room map →</div>
+            </a>
           </div>
-          <p class="lead reveal r4" style="margin-top:38px; font-size:24px;">Founders, operators, consultants — anyone who gets up in front of a room. <b>This is pipeline you're already leaving on the table.</b></p>
         </div>
-        <div class="colophon"><span>Why it matters</span><span class="folio">07 / 09</span></div>
+        <div class="colophon"><span>What you just used</span><span class="folio">07 / 09</span></div>
       </div>
     </section>
 
@@ -442,7 +510,21 @@
 <div class="counter" id="counter">01 / 09</div>
 <div class="edit-hotzone" id="editHotzone"></div>
 <button class="edit-toggle" id="editToggle" title="Edit mode (E)">&#9998;</button>
-<div class="edit-banner" id="editBanner">Edit mode — click text to edit &middot; Ctrl/Cmd+S to save &middot; E to exit</div>
+<div class="edit-banner" id="editBanner">Edit mode — click text to edit &middot; Ctrl/Cmd+S to save &middot; Press Esc when done</div>
+
+<button class="qa-fab" id="qaFab" type="button" aria-label="Show questions from the room">
+  <span class="qa-dot" aria-hidden="true"></span>
+  <span>Questions from the room</span>
+  <span class="qa-count" id="qaCount">0</span>
+</button>
+<div class="qa-overlay" id="qaOverlay" role="dialog" aria-modal="true" aria-label="Questions from the room">
+  <div class="qa-head">
+    <div class="qa-title">From the <em>room</em></div>
+    <button class="qa-close" id="qaClose" type="button" aria-label="Close (Esc)">&times;</button>
+  </div>
+  <ul class="qa-list" id="qaList"></ul>
+  <div class="qa-hint">Tap a question to mark it answered &middot; Esc to close</div>
+</div>
 
 <script>
 /* hydrate brand text from config.js (kept identical to the template engine) */
@@ -598,7 +680,13 @@ editor.restore();
   });
   hotzone.addEventListener('click', () => editor.toggleEditMode());
   document.addEventListener('keydown', (e) => {
-    if((e.key === 'e' || e.key === 'E') && !e.metaKey && !e.ctrlKey && !(e.target && e.target.isContentEditable)){
+    /* E only ENTERS edit mode (no-op if already active — contentEditable needs
+       to keep typing "e"). ESC only EXITS edit mode. */
+    if((e.key === 'e' || e.key === 'E') && !e.metaKey && !e.ctrlKey && !editor.isActive && !(e.target && e.target.isContentEditable)){
+      editor.toggleEditMode();
+    }
+    if(e.key === 'Escape' && editor.isActive){
+      e.preventDefault();
       editor.toggleEditMode();
     }
     if((e.metaKey || e.ctrlKey) && e.key === 's' && editor.isActive){
@@ -606,6 +694,121 @@ editor.restore();
       editor.save(true);
     }
   });
+})();
+
+/* ===========================================
+   LIVE Q&A FROM THE ROOM — ported from workshop-sto-readiness/app/deck.html.
+   Reads pres_questions (this deck's event) via the Supabase REST API using the
+   url + publishable key already in config.js. A floating button opens an
+   overlay listing live questions; tapping one marks it answered (removes it
+   from the list). Polls every 4s so a question asked in the companion shows
+   up here without a reload.
+   =========================================== */
+(function(){
+  "use strict";
+  var CFG = window.DECK_CONFIG || {};
+  var SUPA = CFG.supabase || {};
+  if(!SUPA.url || !SUPA.publishableKey) return;
+  var EVENT = CFG.event || "deck";
+  var T = Object.assign({ questions:"pres_questions" }, CFG.tables || {});
+  var REST = SUPA.url + "/rest/v1/" + T.questions;
+  var HEADERS = { apikey: SUPA.publishableKey, Authorization: "Bearer " + SUPA.publishableKey };
+
+  var fab = document.getElementById("qaFab");
+  var count = document.getElementById("qaCount");
+  var overlay = document.getElementById("qaOverlay");
+  var listEl = document.getElementById("qaList");
+  var closeBtn = document.getElementById("qaClose");
+  if(!fab || !overlay || !listEl) return;
+
+  var questions = [];
+  var open = false;
+  var busy = {};
+
+  function esc(s){
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
+      return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c];
+    });
+  }
+
+  function render(){
+    var n = questions.length;
+    count.textContent = String(n);
+    fab.classList.toggle("show", n > 0);
+    if(n === 0 && open) closeOverlay();
+    if(!open) return;
+    listEl.innerHTML = questions.length ? questions.map(function(q){
+      var who = [];
+      if(q.name) who.push("<b>" + esc(q.name) + "</b>");
+      if(q.company) who.push(esc(q.company));
+      var meta = who.length ? who.join(" &middot; ") : "Anonymous";
+      return '<li data-id="' + esc(q.id) + '">' +
+        '<p class="qa-q">' + esc(q.text) + '</p>' +
+        '<div class="qa-who">' + meta + '</div>' +
+      '</li>';
+    }).join("") : '<div class="qa-empty">No questions yet — the floor is quiet.</div>';
+  }
+
+  function openOverlay(){
+    open = true;
+    overlay.classList.add("open");
+    render();
+  }
+  function closeOverlay(){
+    open = false;
+    overlay.classList.remove("open");
+  }
+
+  function markAnswered(id, li){
+    if(busy[id]) return;
+    busy[id] = true;
+    if(li) li.classList.add("answering");
+    fetch(REST + "?id=eq." + encodeURIComponent(id), {
+      method: "PATCH",
+      headers: Object.assign({ "Content-Type": "application/json", Prefer: "return=minimal" }, HEADERS),
+      body: JSON.stringify({ answered: true })
+    }).then(function(res){
+      if(!res.ok) throw new Error("patch " + res.status);
+      questions = questions.filter(function(q){ return String(q.id) !== String(id); });
+      delete busy[id];
+      render();
+    }).catch(function(){
+      delete busy[id];
+      if(li) li.classList.remove("answering");
+    });
+  }
+
+  function poll(){
+    fetch(REST + "?select=id,created_at,name,company,text,answered&event=eq." + encodeURIComponent(EVENT) + "&order=created_at.desc", {
+      headers: HEADERS
+    }).then(function(res){
+      if(!res.ok) throw new Error("get " + res.status);
+      return res.json();
+    }).then(function(rows){
+      questions = (rows || []).filter(function(q){ return !q.answered && !busy[q.id]; });
+      render();
+    }).catch(function(){ /* offline: leave state as-is, fail silent */ });
+  }
+
+  fab.addEventListener("click", openOverlay);
+  closeBtn.addEventListener("click", closeOverlay);
+  listEl.addEventListener("click", function(e){
+    var li = e.target.closest("li[data-id]");
+    if(li) markAnswered(li.getAttribute("data-id"), li);
+  });
+
+  document.addEventListener("keydown", function(e){
+    if(!overlay.classList.contains("open")) return;
+    if(e.key === "Escape"){ e.preventDefault(); e.stopPropagation(); closeOverlay(); return; }
+    if(e.key === "ArrowRight" || e.key === "ArrowLeft" || e.key === "ArrowUp" ||
+       e.key === "ArrowDown" || e.key === " " || e.key === "PageUp" ||
+       e.key === "PageDown" || e.key === "Home" || e.key === "End"){
+      e.preventDefault(); e.stopPropagation();
+    }
+  }, true);
+
+  poll();
+  setInterval(poll, 4000);
 })();
 </script>
 </body>
