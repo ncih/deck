@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deck — turn the room into leads</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<script src="config.js"></script>
+<!-- ============================================================================
+     TEACHING DECK — "Deck" self-guided demo.
+     This deck IS the worked example of the product it teaches. The slide ENGINE
+     below (scaling, keyboard/touch nav, #n deep-link, progress + counter) is kept
+     verbatim from the template — only the markup/CSS content of each <section
+     class="slide"> and this <style> block are custom. Brand + copy come from
+     config.js (data-brand/data-tagline/data-presenter) so this file never
+     hardcodes brand strings that could drift from config.js.
+     ============================================================================ -->
+<style>
+  /* =============================================================================
+     BRAND SYSTEM — neo-brutalist, matches nicholaschong.xyz.
+     Accent colours here intentionally shadow theme.css so this file also reads
+     correctly if opened stand-alone. --ink-strong/--paper/--accent/--sans/--serif/
+     --mono still come from theme.css and win where both are set on :root.
+     ============================================================================= */
+  :root{
+    --blue:   #1528C4;
+    --yellow: #FFC400;
+    --ink:    #0A0A0A;
+    --paper:  #FAF8F2;
+    --page:   #EFEDE4;
+    --muted:  #605C52;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --bw: 2.5px; /* the brand's signature thick border */
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html,body{ width:100%; height:100%; margin:0; overflow:hidden; background:var(--ink); }
+  body{
+    font-family:"Geist", var(--sans), -apple-system, sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+
+  /* ---- fixed 16:9 stage (mandatory base, from viewport-base.css) ---------- */
+  .deck-viewport{ position:fixed; inset:0; overflow:hidden; background:var(--ink); }
+  .deck-stage{ position:absolute; left:0; top:0; width:1920px; height:1080px; overflow:hidden; transform-origin:0 0; background:var(--paper); }
+  .slide{ position:absolute; inset:0; width:1920px; height:1080px; overflow:hidden; display:block; visibility:hidden; opacity:0; pointer-events:none; background:var(--paper); }
+  .slide.visible{ visibility:visible; opacity:1; pointer-events:auto; z-index:1; transition:opacity .35s ease; }
+  img,video,canvas,svg{ max-width:100%; max-height:100%; }
+  @media print{
+    html,body{ width:1920px; height:auto; overflow:visible; background:#fff; }
+    .deck-viewport{ position:static; overflow:visible; background:#fff; }
+    .deck-stage{ position:static; width:auto; height:auto; transform:none !important; background:none; }
+    .slide{ position:relative; display:block !important; visibility:visible !important; opacity:1 !important; pointer-events:auto !important; width:1920px; height:1080px; break-after:page; }
+    .slide:last-child{ break-after:auto; }
+    .deck-controls{ display:none !important; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{ animation-duration:.01ms !important; transition-duration:.2s !important; }
+  }
+
+  /* ---- chrome outside the stage ---- */
+  .progress{ position:fixed; left:0; bottom:0; height:5px; width:0%; background:var(--yellow); z-index:1001; transition:width .3s var(--ease); }
+  .counter{ position:fixed; right:26px; bottom:16px; z-index:1001; font-family:"Space Mono", var(--mono), monospace; font-size:14px; letter-spacing:.08em; color:rgba(250,248,242,.8); }
+
+  /* ---- reveal choreography ---- */
+  .reveal{ opacity:0; transform:translateY(28px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
+  .slide.visible .reveal{ opacity:1; transform:translateY(0); }
+  .r1{ transition-delay:.08s } .r2{ transition-delay:.18s } .r3{ transition-delay:.28s }
+  .r4{ transition-delay:.38s } .r5{ transition-delay:.48s } .r6{ transition-delay:.58s }
+
+  /* ---- shared slide furniture ---- */
+  .pad{ position:absolute; inset:88px 110px; display:flex; flex-direction:column; }
+  .masthead{ display:flex; justify-content:space-between; align-items:center; }
+  .wm{ font-family:"Bricolage Grotesque", var(--serif), serif; font-weight:800; font-size:26px; letter-spacing:-0.01em; color:var(--ink); }
+  .section{ font-family:"Space Mono", var(--mono), monospace; font-size:14px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--muted); }
+  .rule{ height:var(--bw); background:var(--ink); margin-top:20px; }
+  .colophon{ margin-top:auto; display:flex; justify-content:space-between; align-items:baseline; font-family:"Space Mono", var(--mono), monospace; font-size:15px; color:var(--muted); }
+  .colophon .folio{ letter-spacing:.06em; }
+
+  .kicker{ display:inline-flex; align-items:center; gap:14px; font-family:"Space Mono", var(--mono), monospace; font-size:16px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--blue); }
+  .kicker::before{ content:""; width:44px; height:var(--bw); background:currentColor; }
+
+  h1,h2{ font-family:"Bricolage Grotesque", var(--serif), serif; font-weight:800; letter-spacing:-0.02em; line-height:1.02; color:var(--ink); }
+  h1 em, h2 em{ font-style:normal; color:var(--blue); }
+  h1 mark, h2 mark{ background:var(--yellow); color:var(--ink); padding:0 10px; font-style:normal; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+
+  .lead{ font-size:28px; line-height:1.5; color:var(--muted); max-width:1180px; }
+  .lead b{ color:var(--ink); font-weight:600; }
+  .center{ justify-content:center; }
+
+  /* ---- neo-brutalist card: thick border + hard offset shadow, no blur ---- */
+  .card{ background:var(--paper); border:var(--bw) solid var(--ink); box-shadow:10px 10px 0 var(--ink); }
+  .card.on-page{ background:var(--page); }
+  .card.on-blue{ background:var(--blue); color:var(--paper); }
+  .card.on-yellow{ background:var(--yellow); color:var(--ink); }
+
+  .tag{ display:inline-block; font-family:"Space Mono", var(--mono), monospace; font-size:13px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; background:var(--ink); color:var(--paper); padding:6px 14px; }
+  .tag.yellow{ background:var(--yellow); color:var(--ink); }
+
+  .btnlink{ display:inline-flex; align-items:center; gap:10px; font-family:"Space Mono", var(--mono), monospace; font-weight:700; font-size:20px; letter-spacing:.02em; color:var(--paper); background:var(--blue); border:var(--bw) solid var(--ink); box-shadow:6px 6px 0 var(--ink); padding:16px 26px; text-decoration:none; transition:transform .15s var(--ease), box-shadow .15s var(--ease); }
+  .btnlink:hover{ transform:translate(3px,3px); box-shadow:3px 3px 0 var(--ink); }
+  .btnlink.ghost{ background:var(--paper); color:var(--ink); }
+  .btnlink.yellow{ background:var(--yellow); color:var(--ink); }
+  .btnlink.big{ font-size:26px; padding:22px 34px; box-shadow:8px 8px 0 var(--ink); }
+
+  .dark{ background:var(--ink); }
+  .dark .wm, .dark h1, .dark h2{ color:var(--paper); }
+  .dark .section, .dark .colophon{ color:rgba(250,248,242,.62); }
+  .dark .lead{ color:rgba(250,248,242,.72); }
+  .dark .lead b{ color:var(--paper); }
+  .dark .rule{ background:rgba(250,248,242,.2); }
+  .dark .card{ background:var(--ink); box-shadow:10px 10px 0 var(--yellow); border-color:var(--paper); }
+  .dark h1 em, .dark h2 em{ color:var(--yellow); } /* blue-on-ink fails contrast; yellow reads on dark */
+
+  /* ================================ SLIDE 1 · HOOK ================================ */
+  .s1-stage{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .s1-headline{ font-size:104px; }
+  .s1-sub{ margin-top:34px; font-size:32px; max-width:1400px; }
+
+  /* ================================ SLIDE 2 · WHAT IT IS ================================ */
+  .whatis-stage{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .does-row{ display:flex; gap:30px; margin-top:44px; }
+  .does{ flex:1; padding:30px 26px; display:flex; flex-direction:column; gap:12px; }
+  .does h3{ font-family:"Bricolage Grotesque", var(--serif), serif; font-weight:800; font-size:26px; color:var(--ink); }
+  .does p{ font-size:19px; color:var(--muted); line-height:1.5; }
+  .replace-strip{ margin-top:38px; display:flex; align-items:center; gap:22px; flex-wrap:wrap; }
+  .replace-strip .lbl{ font-family:"Space Mono", var(--mono), monospace; font-size:15px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+  .oldtool{ font-family:"Space Mono", var(--mono), monospace; font-size:18px; color:var(--ink); border:var(--bw) solid var(--ink); padding:8px 16px; position:relative; }
+  .oldtool::after{ content:""; position:absolute; left:8%; right:8%; top:52%; height:2.5px; background:var(--blue); transform:rotate(-4deg); }
+  .except{ margin-top:26px; font-size:24px; color:var(--ink); font-weight:600; }
+  .except em{ font-style:normal; color:var(--blue); }
+
+  /* ================================ SLIDE 3 · BE THE AUDIENCE ================================ */
+  .s3-stage{ flex:1; display:flex; align-items:center; gap:80px; }
+  .s3-copy{ flex:1.15; }
+  .s3-headline{ font-size:72px; }
+  .s3-sub{ margin-top:26px; font-size:26px; max-width:820px; }
+  .s3-cta{ margin-top:44px; display:flex; flex-direction:column; gap:16px; align-items:flex-start; }
+  .s3-url{ font-family:"Space Mono", var(--mono), monospace; font-size:16px; color:var(--muted); word-break:break-all; }
+  .s3-qr-wrap{ flex:none; display:flex; flex-direction:column; align-items:center; gap:16px; }
+  .qrbox{ width:300px; height:300px; background:var(--paper); border:var(--bw) solid var(--ink); box-shadow:8px 8px 0 var(--yellow); padding:18px; display:flex; align-items:center; justify-content:center; }
+  .qrbox img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .qr-ph{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; width:100%; height:100%; text-align:center; font-family:"Space Mono", var(--mono), monospace; }
+  .qr-ph .glyph{ font-size:56px; line-height:1; }
+  .qr-ph .lab{ font-size:13px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); }
+  .qr-ph .note{ font-size:11px; color:var(--muted); }
+  .qr-caption{ font-family:"Space Mono", var(--mono), monospace; font-size:14px; text-align:center; color:var(--muted); max-width:300px; line-height:1.5; }
+
+  /* ================================ SLIDE 4 · THE REVEAL ================================ */
+  .s4-stage{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .s4-headline{ font-size:82px; }
+  .s4-sub{ margin-top:30px; font-size:30px; max-width:1300px; }
+  .s4-cta{ margin-top:48px; display:flex; align-items:center; gap:28px; flex-wrap:wrap; }
+  .payoff{ margin-top:40px; font-size:28px; color:var(--paper); font-weight:600; max-width:1250px; line-height:1.45; }
+  .payoff em{ font-style:normal; color:var(--yellow); }
+
+  /* ================================ SLIDE 5 · WHY IT MATTERS ================================ */
+  .why-stage{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .why-grid{ display:flex; gap:36px; margin-top:44px; }
+  .why-card{ flex:1; padding:34px 30px; display:flex; flex-direction:column; gap:14px; }
+  .why-card .n{ font-family:"Bricolage Grotesque", var(--serif), serif; font-weight:800; font-size:44px; color:var(--blue); line-height:1; }
+  .why-card h3{ font-family:"Bricolage Grotesque", var(--serif), serif; font-weight:800; font-size:27px; color:var(--ink); }
+  .why-card p{ font-size:19px; color:var(--muted); line-height:1.5; }
+  .why-card.on-blue .n{ color:var(--yellow); }
+  .why-card.on-blue h3{ color:var(--paper); }
+  .why-card.on-blue p{ color:rgba(250,248,242,.82); }
+
+  /* ================================ SLIDE 6 · MAKE IT YOURS ================================ */
+  .s6-stage{ flex:1; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:40px; }
+  .s6-headline{ font-size:92px; }
+  .s6-sub{ font-size:28px; max-width:1200px; }
+  .cta-row{ display:flex; gap:24px; }
+  .taglinebig{ font-family:"Space Mono", var(--mono), monospace; font-size:22px; letter-spacing:.06em; color:rgba(250,248,242,.72); }
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+  <main class="deck-stage" id="deckStage">
+
+    <!-- ============================ 1 · HOOK ============================ -->
+    <section class="slide dark">
+      <div class="pad">
+        <div class="masthead"><div class="wm" data-brand></div><div class="section" data-tagline></div></div>
+        <div class="rule"></div>
+        <div class="s1-stage">
+          <div class="kicker reveal r1" style="color:var(--yellow);">A quick provocation</div>
+          <h1 class="s1-headline reveal r2" style="margin-top:30px;">AI can do almost<br>anything now.<br>We still present like<br><mark>it's 2005.</mark></h1>
+          <p class="lead s1-sub reveal r3">You stand up, talk over a static PDF, and the second you finish, the room's gone. Everyone who leaned in, nodded, wanted more — vanished. <b>You never even knew who was there.</b></p>
+        </div>
+        <div class="colophon"><span data-presenter></span><span class="folio">01 / 06</span></div>
+      </div>
+    </section>
+
+    <!-- ============================ 2 · WHAT IT IS / WHAT IT REPLACES ============================ -->
+    <section class="slide">
+      <div class="pad">
+        <div class="masthead"><div class="wm" data-brand></div><div class="section">What it is</div></div>
+        <div class="rule"></div>
+        <div class="whatis-stage">
+          <div class="kicker reveal r1">Meet Deck</div>
+          <h1 class="reveal r2" style="font-size:64px; margin-top:22px;">A tiny presenter app that runs off <em>your own slides.</em></h1>
+          <div class="does-row reveal r3">
+            <div class="does card"><h3>They answer on their phones</h3><p>Drop a question mid-talk. Answers come back from the actual people in the room, tied to real names.</p></div>
+            <div class="does card"><h3>You read the room live</h3><p>A second screen shows the tallies filling in as they tap. You watch the mood shift while you're still talking.</p></div>
+            <div class="does card"><h3>Everyone becomes a lead</h3><p>To answer, they registered. So the whole room lands in a table you can export the moment you step off.</p></div>
+          </div>
+          <div class="replace-strip reveal r4">
+            <span class="lbl">Instead of</span>
+            <span class="oldtool">Slido</span>
+            <span class="oldtool">Mentimeter</span>
+            <span class="oldtool">Kahoot</span>
+            <span class="oldtool">badge scanners</span>
+          </div>
+          <p class="except reveal r5">Same jobs those do — audience polls, lead capture — <em>except it's yours,</em> in one thing, running off your slides.</p>
+        </div>
+        <div class="colophon"><span>What it is</span><span class="folio">02 / 06</span></div>
+      </div>
+    </section>
+
+    <!-- ============================ 3 · BE THE AUDIENCE (CTA) ============================ -->
+    <section class="slide">
+      <div class="pad">
+        <div class="masthead"><div class="wm" data-brand></div><div class="section">Your turn</div></div>
+        <div class="rule"></div>
+        <div class="s3-stage">
+          <div class="s3-copy">
+            <div class="kicker reveal r1">Don't take my word for it</div>
+            <h1 class="s3-headline reveal r2" style="margin-top:22px;">For the next minute,<br>you're in <em>my audience.</em></h1>
+            <p class="lead s3-sub reveal r3">Open the companion on your phone, or right here in a tab. Register, run the checkpoints, tell me what you actually think. I'll show you the other side in a second.</p>
+            <div class="s3-cta reveal r4">
+              <a class="btnlink big" href="index.html" target="_blank" rel="noopener">Open the companion →</a>
+              <span class="s3-url">ncih.github.io/deck/index.html</span>
+            </div>
+          </div>
+          <div class="s3-qr-wrap reveal r4">
+            <div class="qrbox">
+              <!-- QR PLACEHOLDER: a real scannable PNG gets dropped into this <img> at
+                   deploy time. data-qr-url is the exact string it must encode. Until
+                   then the .qr-ph fallback shows (img has no src, so it stays hidden). -->
+              <img id="deck-qr" src="deck-qr.svg" alt="Scan to join the companion" data-qr-url="https://ncih.github.io/deck/index.html">
+              <div class="qr-ph" id="deck-qr-ph">
+                <div class="glyph">&#9633;</div>
+                <div class="lab">QR → the companion</div>
+                <div class="note">real code dropped in at deploy</div>
+              </div>
+            </div>
+            <div class="qr-caption">Scan to join, or use the link.<br>ncih.github.io/deck/index.html</div>
+          </div>
+        </div>
+        <div class="colophon"><span>Your turn</span><span class="folio">03 / 06</span></div>
+      </div>
+    </section>
+
+    <!-- ============================ 4 · THE REVEAL (CTA) ============================ -->
+    <section class="slide dark">
+      <div class="pad">
+        <div class="masthead"><div class="wm" data-brand></div><div class="section">The other side</div></div>
+        <div class="rule"></div>
+        <div class="s4-stage">
+          <div class="kicker reveal r1" style="color:var(--yellow);">Welcome back</div>
+          <h1 class="s4-headline reveal r2" style="margin-top:22px;">Here's what I could<br>see the <em>whole time.</em></h1>
+          <p class="lead s4-sub reveal r3">This is the presenter view — the room map I read live while you were tapping. Your answer's in there now, sitting next to everyone else who's tried it.</p>
+          <div class="s4-cta reveal r4">
+            <a class="btnlink yellow big" href="presenter.html" target="_blank" rel="noopener">Open the room map →</a>
+          </div>
+          <p class="payoff reveal r5">And here's the quiet part: to answer, you registered. So <em>you — and everyone who showed up — just became a lead.</em></p>
+        </div>
+        <div class="colophon"><span data-presenter></span><span class="folio">04 / 06</span></div>
+      </div>
+    </section>
+
+    <!-- ============================ 5 · WHY IT MATTERS ============================ -->
+    <section class="slide">
+      <div class="pad">
+        <div class="masthead"><div class="wm" data-brand></div><div class="section">Why it matters</div></div>
+        <div class="rule"></div>
+        <div class="why-stage">
+          <div class="kicker reveal r1">If you present for a living</div>
+          <h1 class="reveal r2" style="font-size:62px; margin-top:22px;">Stop losing the room the<br>second you <em>stop talking.</em></h1>
+          <div class="why-grid reveal r3">
+            <div class="why-card card"><div class="n">01</div><h3>You already did the hard part</h3><p>You got people in a room and held their attention. Walking out with nothing but a warm feeling is a waste of that.</p></div>
+            <div class="why-card card on-blue"><div class="n">02</div><h3>Every talk feeds the pipeline</h3><p>A pitch, a workshop, a conference session — each one quietly hands you a qualified list, sorted by what people actually said.</p></div>
+            <div class="why-card card"><div class="n">03</div><h3>No booth, no scanner, no chase</h3><p>Nobody's swapping cards or hoping the badge scanner synced. The follow-up list builds itself while you speak.</p></div>
+          </div>
+          <p class="lead reveal r4" style="margin-top:38px; font-size:24px;">Founders, operators, consultants — anyone who gets up in front of a room. <b>This is pipeline you're already leaving on the table.</b></p>
+        </div>
+        <div class="colophon"><span>Why it matters</span><span class="folio">05 / 06</span></div>
+      </div>
+    </section>
+
+    <!-- ============================ 6 · MAKE IT YOURS (CTA) ============================ -->
+    <section class="slide dark">
+      <div class="pad">
+        <div class="masthead"><div class="wm" data-brand></div><div class="section">Make it yours</div></div>
+        <div class="rule"></div>
+        <div class="s6-stage">
+          <div>
+            <div class="kicker reveal r1" style="color:var(--yellow);">It's yours, not rented</div>
+            <h1 class="s6-headline reveal r2" style="margin-top:24px;">Want one for your<br>next talk?</h1>
+          </div>
+          <p class="lead s6-sub reveal r3">It runs on your own setup — your repo, your hosting. I built this one in an afternoon. I can hand you the template, or come run the whole thing at your event.</p>
+          <div class="cta-row reveal r4" id="ctaLinks"><!-- populated from config.js brand.links --></div>
+          <div class="taglinebig reveal r5" data-tagline></div>
+        </div>
+        <div class="colophon"><span data-presenter></span><span class="folio">06 / 06</span></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+<div class="progress" id="progress"></div>
+<div class="counter" id="counter">01 / 06</div>
+
+<script>
+/* hydrate brand text from config.js (kept identical to the template engine) */
+(function(){
+  var b = (window.DECK_CONFIG && window.DECK_CONFIG.brand) || {};
+  document.title = (b.name ? b.name + " — teaching deck" : "Deck");
+  function fill(sel, val){ document.querySelectorAll(sel).forEach(function(el){ if(val) el.textContent = val; }); }
+  fill("[data-brand]", b.name);
+  fill("[data-tagline]", b.tagline);
+  fill("[data-presenter]", b.presenter);
+
+  /* CTA links on the closing slide — pulled from brand.links, not hardcoded.
+     Slide 6 is the outward "make it yours" CTA (book Nicholas / get the template),
+     so drop the internal app-navigation links (deck / companion / presenter) —
+     those have their own dedicated buttons earlier in the deck. The first
+     surviving link is promoted to the yellow primary. */
+  var wrap = document.getElementById('ctaLinks');
+  if (wrap && Array.isArray(b.links)) {
+    var outward = b.links.filter(function(link){
+      return !/(deck|index|presenter)\.html(#|$)/.test(link.href || '#');
+    });
+    outward.forEach(function(link, i){
+      var href = link.href || '#';
+      var a = document.createElement('a');
+      a.className = 'btnlink' + (i === 0 ? ' yellow' : ' ghost');
+      a.href = href;
+      a.textContent = link.label || 'Learn more';
+      if (href && href !== '#') { a.target = '_blank'; a.rel = 'noopener'; }
+      wrap.appendChild(a);
+    });
+  }
+})();
+
+/* QR placeholder on slide 3 — a real scannable PNG is dropped into #deck-qr's
+   src at deploy time (data-qr-url holds the exact string it must encode). If a
+   src is ever set, hide the fallback glyph so only the real code shows. */
+(function(){
+  var img = document.getElementById('deck-qr'), ph = document.getElementById('deck-qr-ph');
+  if (!img || !ph) return;
+  function sync(){ var has = !!img.getAttribute('src'); img.style.display = has ? '' : 'none'; ph.style.display = has ? 'none' : ''; }
+  img.addEventListener('load', sync);
+  sync();
+})();
+
+/* slide engine — kept verbatim from the template */
+class SlidePresentation {
+  constructor(){
+    this.slides = Array.from(document.querySelectorAll('.slide'));
+    this.stage = document.getElementById('deckStage');
+    this.progress = document.getElementById('progress');
+    this.counter = document.getElementById('counter');
+    this.current = 0;
+    this.scale(); window.addEventListener('resize', () => this.scale());
+    this.keys(); this.touch();
+    const h = parseInt((location.hash||'').replace('#',''),10);
+    this.show(Number.isFinite(h) && h>=1 && h<=this.slides.length ? h-1 : 0);
+  }
+  scale(){
+    const f = Math.min(window.innerWidth/1920, window.innerHeight/1080);
+    const x = (window.innerWidth-1920*f)/2, y = (window.innerHeight-1080*f)/2;
+    this.stage.style.transform = `translate(${x}px, ${y}px) scale(${f})`;
+  }
+  keys(){
+    document.addEventListener('keydown', (e) => {
+      if(e.metaKey||e.ctrlKey||e.altKey) return;
+      switch(e.key){
+        case 'ArrowRight': case 'ArrowDown': case ' ': case 'PageDown': e.preventDefault(); this.show(this.current+1); break;
+        case 'ArrowLeft': case 'ArrowUp': case 'PageUp': e.preventDefault(); this.show(this.current-1); break;
+        case 'Home': e.preventDefault(); this.show(0); break;
+        case 'End': e.preventDefault(); this.show(this.slides.length-1); break;
+      }
+    });
+  }
+  touch(){
+    let x0=null;
+    document.addEventListener('touchstart', (e)=>{ x0=e.touches[0].clientX; }, {passive:true});
+    document.addEventListener('touchend', (e)=>{ if(x0===null) return; const dx=e.changedTouches[0].clientX-x0; if(Math.abs(dx)>60)(dx<0?this.show(this.current+1):this.show(this.current-1)); x0=null; }, {passive:true});
+  }
+  show(i){
+    this.current = Math.max(0, Math.min(i, this.slides.length-1));
+    this.slides.forEach((s,j)=> s.classList.toggle('visible', j===this.current));
+    const n=this.current+1, total=this.slides.length;
+    this.progress.style.width = (n/total*100)+'%';
+    this.counter.textContent = String(n).padStart(2,'0')+' / '+total;
+    history.replaceState(null,'','#'+n);
+  }
+}
+window.deck = new SlidePresentation();
+</script>
+</body>
+</html>
