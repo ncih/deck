@@ -33,6 +33,9 @@
   .hero-logo{ font-weight:700; font-size:22px; letter-spacing:-0.02em; color:var(--ink-strong); margin:2px 0 24px; }
   .masthead .section{ font-size:9px; font-weight:600; letter-spacing:0.24em; text-transform:uppercase; color:var(--body); }
   .masthead .line{ height:1px; background:var(--hairline); margin-top:12px; }
+  .backtoslides{ display:inline-flex; align-items:center; gap:5px; margin-top:8px; font-size:10px; font-weight:600;
+    letter-spacing:0.1em; color:var(--body); text-decoration:none; }
+  .backtoslides:active{ color:var(--accent-dark); }
 
   /* sync dot */
   .sync{ position:fixed; top:calc(10px + env(safe-area-inset-top)); right:10px; width:7px; height:7px; border-radius:50%;
@@ -200,6 +203,7 @@
         <div class="wordmark" id="brandWord"></div>
         <div class="section" id="brandTag"></div>
       </div>
+      <a class="backtoslides" href="deck.html">&#8592; back to the slides</a>
       <div class="line"></div>
     </header>
     <div class="progress" id="progress" style="display:none">

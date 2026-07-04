@@ -40,16 +40,16 @@ window.DECK_CONFIG = {
 
   /* ---- Brand + links -------------------------------------------------------*/
   brand: {
-    name:       "Deck",
+    name:       "nicholaschong.xyz",
     tagline:    "Turn the room you just presented to into leads.",
     presenter:  "Nicholas",                 // used in gate/waiting copy
     logo:       "brand-logo.svg",            // dark logo (attendee, light bg)
     logoWhite:  "brand-logo.svg",            // light logo (dark bg: card head, presenter)
     // shown on the finale card end-screen + the deck's closing slide:
     links: [
-      { label: "See the room →",     href: "presenter.html", primary: true },
-      { label: "Get the template →", href: "#", primary: false }, // TODO(nicholas): template repo URL
-      { label: "Book Nicholas →",    href: "#", primary: false }  // TODO(nicholas): booking URL
+      { label: "See the room →",         href: "presenter.html", primary: true },
+      { label: "Get the template →",     href: "#", primary: false }, // TODO(nicholas): template repo URL
+      { label: "See how it's built →",   href: "#", primary: false }  // TODO(nicholas): README/how-to URL
     ]
   },
 
@@ -57,7 +57,7 @@ window.DECK_CONFIG = {
   register: {
     kicker: "60 seconds",
     title:  "Be my audience for a <em>minute.</em>",
-    lede:   "This is the phone half of Deck. Register like you would at a real talk, answer a few things, and I'll show you what I could see the whole time. And yes — the name and email are the point.",
+    lede:   "This is the phone half of this thing. Register like you would at a real talk, answer a few things, and I'll show you what I could see the whole time. And yes — the name and email are the point.",
     cta:    "I'm in",
     fields: [
       { id:"name",    label:"Name",    type:"text",  required:true,  err:"Pop your name in — the summary's yours to keep." },
@@ -83,9 +83,11 @@ window.DECK_CONFIG = {
       ]
     },
     {
-      id:"cp1", type:"single", gate:1,
+      id:"cp1", type:"multi", gate:1, max:2,
       kicker:"Checkpoint 1", cp:"What you present",
-      title:"What do you <em>get up and present?</em>",
+      title:"What do you <em>present most?</em>",
+      lede:"Pick all that apply.",
+      pickhint:"Pick up to 2.",
       cta:"That's me",
       options:[
         { k:"pitch",    n:"Pitch / investor deck", sub:"Raising, or making the case for it." },
@@ -112,20 +114,20 @@ window.DECK_CONFIG = {
     {
       id:"cp3", type:"single", gate:3,
       kicker:"Checkpoint 3", cp:"Next step",
-      title:"If your slides handed you the room <em>as leads,</em> you'd…",
+      title:"Would you use something <em>like this?</em>",
       cta:"That's me",
       options:[
-        { k:"try",    n:"Try it on my next talk",   sub:"See it work for real, on my own room." },
-        { k:"tellme", n:"Tell me more first",        sub:"Not sold yet — want the details." },
-        { k:"book",   n:"Get Nicholas to run one",   sub:"Have him bring this to my session." }
+        { k:"try",   n:"Yes — on my next one",   sub:"See it work for real, on my own room." },
+        { k:"maybe", n:"Maybe — show me more",   sub:"Not sold yet — want the details." },
+        { k:"no",    n:"Not for me",              sub:"Doesn't fit what I do." }
       ]
     },
     {
       id:"cp4", type:"text", gate:4, optional:true,
       kicker:"Last one", cp:"Open floor",
-      title:"What do you wish your talks or events could do — but can’t?",
-      lede:"Anything — a tool you wish existed, the part that always goes wrong, the follow-up you never get to. I read every one; it’s how I pick what to build next.",
-      placeholder:"The thing that bugs you most…",
+      title:"What do you wish this could do — but <em>can’t?</em>",
+      lede:"Anything — the feature you’d want, the part that always trips you up, the thing you’d change. I read every one; it’s how I decide what to build next.",
+      placeholder:"The thing you’d change…",
       cta:"Send it"
     }
   ],
@@ -135,25 +137,25 @@ window.DECK_CONFIG = {
     kicker:"That's the trick", cp:"You're a lead now",
     title:"You're now a lead <em>in my pipeline.</em>",
     cardLabel:"Your summary card",
-    passLabel:"Deck · you just tried it",
+    passLabel:"nicholaschong.xyz · you just tried it",
     /* which flow answers to print on the card, top to bottom
        (cp4 is open text — it's in the room feed, not on the card): */
     stops:[
       { cp:"cp0", label:"Your world" },
-      { cp:"cp1", label:"You present" },
+      { cp:"cp1", label:"What you present" },
       { cp:"cp2", label:"The gap" },
-      { cp:"cp3", label:"Next step" }
+      { cp:"cp3", label:"Would you use it" }
     ],
     /* recap = the line printed on the summary card itself; note = the sign-off
        shown after they tap Done. Kept separate so nothing repeats. */
     recap:"That's the trick. You answered a few questions, and now you're a qualified lead in my table — sorted by what you actually said.",
     note:"Every talk you give could do exactly this. <b>See the room to watch your answer land.</b>",
-    footer:"Deck — turn the room into leads"
+    footer:"turn the room into leads"
   },
 
   /* ---- Presenter live view -------------------------------------------------*/
   presenter: {
     title:"Live Room Map",
-    footer:"Deck · live audience view"
+    footer:"nicholaschong.xyz · live audience view"
   }
 };

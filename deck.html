@@ -3,20 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Deck — turn the room into leads</title>
+<title>nicholaschong.xyz — turn the room into leads</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="theme.css">
 <script src="config.js"></script>
 <!-- ============================================================================
-     TEACHING DECK — "Deck" self-guided demo.
-     This deck IS the worked example of the product it teaches. The slide ENGINE
-     below (scaling, keyboard/touch nav, #n deep-link, progress + counter) is kept
-     verbatim from the template — only the markup/CSS content of each <section
-     class="slide"> and this <style> block are custom. Brand + copy come from
-     config.js (data-brand/data-tagline/data-presenter) so this file never
-     hardcodes brand strings that could drift from config.js.
+     TEACHING DECK — a self-guided demo of a tool for turning a talk's room into leads.
+     This deck IS the worked example of the thing it teaches. The slide ENGINE
+     below (scaling, keyboard/touch nav, #n deep-link, progress + counter, and the
+     inline edit mode) is kept functionally identical to the template — only the
+     markup/CSS content of each <section class="slide"> and this <style> block are
+     custom. Brand + copy come from config.js (data-brand/data-tagline/data-presenter)
+     so this file never hardcodes brand strings that could drift from config.js.
+     The product itself has no name — never call it "Deck" in copy.
      ============================================================================ -->
 <style>
   /* =============================================================================
@@ -157,24 +158,69 @@
   .s4-cta{ margin-top:48px; display:flex; align-items:center; gap:28px; flex-wrap:wrap; }
   .payoff{ margin-top:40px; font-size:28px; color:var(--paper); font-weight:600; max-width:1250px; line-height:1.45; }
   .payoff em{ font-style:normal; color:var(--yellow); }
+  .nudge{ margin-top:22px; font-size:20px; color:rgba(250,248,242,.62); max-width:1150px; line-height:1.5; }
+  .nudge b{ color:var(--paper); font-weight:600; }
 
-  /* ================================ SLIDE 5 · WHY IT MATTERS ================================ */
-  .why-stage{ flex:1; display:flex; flex-direction:column; justify-content:center; }
-  .why-grid{ display:flex; gap:36px; margin-top:44px; }
-  .why-card{ flex:1; padding:34px 30px; display:flex; flex-direction:column; gap:14px; }
-  .why-card .n{ font-family:"Bricolage Grotesque", var(--serif), serif; font-weight:800; font-size:44px; color:var(--blue); line-height:1; }
-  .why-card h3{ font-family:"Bricolage Grotesque", var(--serif), serif; font-weight:800; font-size:27px; color:var(--ink); }
-  .why-card p{ font-size:19px; color:var(--muted); line-height:1.5; }
-  .why-card.on-blue .n{ color:var(--yellow); }
-  .why-card.on-blue h3{ color:var(--paper); }
-  .why-card.on-blue p{ color:rgba(250,248,242,.82); }
+  /* shared small helper: a keyboard-key chip used inline in copy */
+  .keycap{ display:inline-block; font-family:"Space Mono", var(--mono), monospace; font-weight:700; background:var(--ink); color:var(--paper); border-radius:4px; padding:1px 9px; font-style:normal; }
+  .dark .keycap{ background:var(--yellow); color:var(--ink); }
 
-  /* ================================ SLIDE 6 · MAKE IT YOURS ================================ */
-  .s6-stage{ flex:1; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:40px; }
-  .s6-headline{ font-size:92px; }
-  .s6-sub{ font-size:28px; max-width:1200px; }
-  .cta-row{ display:flex; gap:24px; }
-  .taglinebig{ font-family:"Space Mono", var(--mono), monospace; font-size:22px; letter-spacing:.06em; color:rgba(250,248,242,.72); }
+  /* ================================ SLIDE 5 · CHECKPOINTS RUN THROUGHOUT ================================ */
+  .cp-stage{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .cp-timeline{ margin-top:48px; display:flex; align-items:flex-start; max-width:1300px; }
+  .cp-node{ display:flex; flex-direction:column; align-items:center; text-align:center; flex:none; width:170px; }
+  .cp-dot{ width:26px; height:26px; border-radius:50%; background:var(--blue); border:var(--bw) solid var(--ink); flex:none; }
+  .cp-lbl{ margin-top:14px; font-family:"Space Mono", var(--mono), monospace; font-size:15px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--ink); line-height:1.5; }
+  .cp-lbl span{ display:block; margin-top:4px; font-size:13px; font-weight:400; text-transform:none; letter-spacing:0; color:var(--muted); }
+  .cp-track{ flex:1; height:var(--bw); background:var(--ink); margin-top:13px; }
+
+  /* ================================ SLIDE 6 · EDIT YOUR SLIDES LIVE ================================ */
+  .edit-stage{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .edit-demo-row{ margin-top:40px; display:flex; gap:28px; }
+  .edit-demo{ flex:1; padding:26px 24px; display:flex; flex-direction:column; gap:10px; }
+  .edit-demo.card.dark{ background:var(--ink); border-color:var(--paper); box-shadow:8px 8px 0 var(--yellow); }
+  .ed-step{ font-family:"Bricolage Grotesque", var(--serif), serif; font-weight:800; font-size:30px; color:var(--yellow); line-height:1; }
+  .edit-demo p{ font-size:18px; color:rgba(250,248,242,.82); line-height:1.5; }
+  .edit-demo p b{ color:var(--paper); }
+
+  /* ================================ SLIDE 8 · TWO WAYS TO SET IT UP ================================ */
+  .setup-stage{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .setup-row{ display:flex; gap:32px; margin-top:40px; align-items:stretch; }
+  .setup-card{ flex:1; padding:32px 30px; display:flex; flex-direction:column; gap:14px; align-items:flex-start; }
+  .setup-card h3{ font-family:"Bricolage Grotesque", var(--serif), serif; font-weight:800; font-size:25px; color:var(--ink); }
+  .setup-card.on-blue h3{ color:var(--paper); }
+  .setup-steps{ margin:0; padding-left:22px; font-size:18px; color:var(--muted); line-height:1.7; }
+  .setup-steps li::marker{ font-family:"Space Mono", var(--mono), monospace; font-weight:700; color:var(--blue); }
+
+  /* ================================ SLIDE 9 · FINAL (CTA) ================================ */
+  .s9-stage{ flex:1; display:flex; align-items:center; gap:64px; }
+  .s9-copy{ flex:1; }
+  .s9-headline{ font-family:"Bricolage Grotesque", var(--serif), serif; font-weight:800; letter-spacing:-0.02em; line-height:1.02; color:var(--paper); font-size:78px; margin-top:22px; }
+  .s9-sub{ margin-top:22px; font-size:24px; max-width:640px; }
+  .s9-card{ flex:none; width:560px; padding:36px 38px 32px; display:flex; flex-direction:column; }
+  .s9-card-kicker{ font-family:"Space Mono", var(--mono), monospace; font-size:13px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--yellow); }
+  .s9-card-list{ margin:18px 0 0; padding-left:20px; font-size:18px; line-height:1.65; color:rgba(250,248,242,.85); }
+  .s9-card-list li::marker{ color:var(--yellow); }
+  .s9-card-list li + li{ margin-top:4px; }
+  .s9-card-cta{ margin-top:26px; display:flex; flex-direction:column; gap:12px; }
+  .s9-card-cta .btnlink{ justify-content:center; font-size:18px; padding:15px 22px; box-shadow:5px 5px 0 var(--yellow); }
+  .s9-card-cta .btnlink.ghost{ background:transparent; color:var(--paper); border-color:var(--paper); box-shadow:none; }
+  .s9-card-cta .btnlink.ghost:hover{ background:rgba(250,248,242,.08); transform:none; }
+
+  /* ================================ INLINE EDIT MODE ================================ */
+  .edit-hotzone{ position:fixed; top:0; left:0; width:84px; height:84px; z-index:10000; cursor:pointer; }
+  .edit-toggle{ position:fixed; top:20px; left:20px; z-index:10001;
+    width:46px; height:46px; border-radius:50%; border:var(--bw) solid var(--ink);
+    background:var(--paper); color:var(--ink); font-size:18px; cursor:pointer;
+    box-shadow:4px 4px 0 var(--ink); opacity:0; pointer-events:none; transition:opacity .25s ease; }
+  .edit-toggle.show, .edit-toggle.active{ opacity:1; pointer-events:auto; }
+  .edit-toggle.active{ background:var(--yellow); }
+  .edit-banner{ position:fixed; top:26px; left:50%; transform:translateX(-50%);
+    z-index:10001; background:var(--yellow); color:var(--ink); font-family:"Space Mono", var(--mono), monospace;
+    font-size:13px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+    padding:9px 20px; border:var(--bw) solid var(--ink); box-shadow:4px 4px 0 var(--ink); display:none; }
+  .edit-banner.on{ display:block; }
+  body.editing .slide .pad [contenteditable="true"]:hover{ outline:1.5px dashed var(--blue); outline-offset:3px; cursor:text; }
 </style>
 </head>
 <body>
@@ -191,7 +237,7 @@
           <h1 class="s1-headline reveal r2" style="margin-top:30px;">AI can do almost<br>anything now.<br>We still present like<br><mark>it's 2005.</mark></h1>
           <p class="lead s1-sub reveal r3">You stand up, talk over a static PDF, and the second you finish, the room's gone. Everyone who leaned in, nodded, wanted more — vanished. <b>You never even knew who was there.</b></p>
         </div>
-        <div class="colophon"><span data-presenter></span><span class="folio">01 / 06</span></div>
+        <div class="colophon"><span data-presenter></span><span class="folio">01 / 09</span></div>
       </div>
     </section>
 
@@ -201,7 +247,7 @@
         <div class="masthead"><div class="wm" data-brand></div><div class="section">What it is</div></div>
         <div class="rule"></div>
         <div class="whatis-stage">
-          <div class="kicker reveal r1">Meet Deck</div>
+          <div class="kicker reveal r1">What this is</div>
           <h1 class="reveal r2" style="font-size:64px; margin-top:22px;">A tiny presenter app that runs off <em>your own slides.</em></h1>
           <div class="does-row reveal r3">
             <div class="does card"><h3>They answer on their phones</h3><p>Drop a question mid-talk. Answers come back from the actual people in the room, tied to real names.</p></div>
@@ -217,7 +263,7 @@
           </div>
           <p class="except reveal r5">Same jobs those do — audience polls, lead capture — <em>except it's yours,</em> in one thing, running off your slides.</p>
         </div>
-        <div class="colophon"><span>What it is</span><span class="folio">02 / 06</span></div>
+        <div class="colophon"><span>What it is</span><span class="folio">02 / 09</span></div>
       </div>
     </section>
 
@@ -233,7 +279,7 @@
             <p class="lead s3-sub reveal r3">Open the companion on your phone, or right here in a tab. Register, run the checkpoints, tell me what you actually think. I'll show you the other side in a second.</p>
             <div class="s3-cta reveal r4">
               <a class="btnlink big" href="index.html" target="_blank" rel="noopener">Open the companion →</a>
-              <span class="s3-url">ncih.github.io/deck/index.html</span>
+              <span class="s3-url">deck.nicholaschong.xyz/index.html</span>
             </div>
           </div>
           <div class="s3-qr-wrap reveal r4">
@@ -241,17 +287,17 @@
               <!-- QR PLACEHOLDER: a real scannable PNG gets dropped into this <img> at
                    deploy time. data-qr-url is the exact string it must encode. Until
                    then the .qr-ph fallback shows (img has no src, so it stays hidden). -->
-              <img id="deck-qr" src="deck-qr.svg" alt="Scan to join the companion" data-qr-url="https://ncih.github.io/deck/index.html">
+              <img id="deck-qr" src="deck-qr.svg" alt="Scan to join the companion" data-qr-url="https://deck.nicholaschong.xyz/index.html">
               <div class="qr-ph" id="deck-qr-ph">
                 <div class="glyph">&#9633;</div>
                 <div class="lab">QR → the companion</div>
                 <div class="note">real code dropped in at deploy</div>
               </div>
             </div>
-            <div class="qr-caption">Scan to join, or use the link.<br>ncih.github.io/deck/index.html</div>
+            <div class="qr-caption">Scan to join, or use the link.<br>deck.nicholaschong.xyz/index.html</div>
           </div>
         </div>
-        <div class="colophon"><span>Your turn</span><span class="folio">03 / 06</span></div>
+        <div class="colophon"><span>Your turn</span><span class="folio">03 / 09</span></div>
       </div>
     </section>
 
@@ -268,12 +314,55 @@
             <a class="btnlink yellow big" href="presenter.html" target="_blank" rel="noopener">Open the room map →</a>
           </div>
           <p class="payoff reveal r5">And here's the quiet part: to answer, you registered. So <em>you — and everyone who showed up — just became a lead.</em></p>
+          <p class="nudge reveal r6">One more thing while you're in there — tap <b>Ask a question</b> on your phone and send something. Watch it land on the room map, live, with your name on it.</p>
         </div>
-        <div class="colophon"><span data-presenter></span><span class="folio">04 / 06</span></div>
+        <div class="colophon"><span data-presenter></span><span class="folio">04 / 09</span></div>
       </div>
     </section>
 
-    <!-- ============================ 5 · WHY IT MATTERS ============================ -->
+    <!-- ============================ 5 · CHECKPOINTS RUN THROUGHOUT ============================ -->
+    <section class="slide">
+      <div class="pad">
+        <div class="masthead"><div class="wm" data-brand></div><div class="section">Not a form at the end</div></div>
+        <div class="rule"></div>
+        <div class="cp-stage">
+          <div class="kicker reveal r1">One at a time, not all at once</div>
+          <h1 class="reveal r2" style="font-size:60px; margin-top:22px;">Those checkpoints? They're <em>woven through the whole talk.</em></h1>
+          <p class="lead reveal r3" style="margin-top:20px; font-size:26px; max-width:1200px;">You just answered four in a row because this is a six-minute demo. On a real talk, I open them one at a time, whenever I get there — not a survey dumped at the end.</p>
+          <div class="cp-timeline reveal r4">
+            <div class="cp-node"><div class="cp-dot"></div><div class="cp-lbl">Early<br><span>Checkpoint 1</span></div></div>
+            <div class="cp-track"></div>
+            <div class="cp-node"><div class="cp-dot"></div><div class="cp-lbl">Mid-talk<br><span>Checkpoint 2</span></div></div>
+            <div class="cp-track"></div>
+            <div class="cp-node"><div class="cp-dot"></div><div class="cp-lbl">Near the close<br><span>Checkpoint 3</span></div></div>
+          </div>
+          <p class="except reveal r5" style="margin-top:34px;">Their phones just sit there and wait — a checkpoint unlocks the second I open it from the room map, <em>right when it's relevant.</em></p>
+        </div>
+        <div class="colophon"><span>Not a form at the end</span><span class="folio">05 / 09</span></div>
+      </div>
+    </section>
+
+    <!-- ============================ 6 · EDIT YOUR SLIDES LIVE ============================ -->
+    <section class="slide dark">
+      <div class="pad">
+        <div class="masthead"><div class="wm" data-brand></div><div class="section">Try it right now</div></div>
+        <div class="rule"></div>
+        <div class="edit-stage">
+          <div class="kicker reveal r1" style="color:var(--yellow);">No, really — try it</div>
+          <h1 class="reveal r2" style="font-size:76px; margin-top:22px;">These are your slides.<br>Press <mark>E</mark> to edit them.</h1>
+          <p class="lead reveal r3" style="margin-top:24px; font-size:28px; max-width:1200px; color:rgba(250,248,242,.72);">Right now, on this exact screen. Hit <b class="keycap">E</b>, or hover the top-left corner — the text on this slide turns editable. Change a word, move to the next slide, it's still there.</p>
+          <div class="edit-demo-row reveal r4">
+            <div class="edit-demo card dark"><div class="ed-step">01</div><p>Press <b class="keycap">E</b> or click the pencil, top-left.</p></div>
+            <div class="edit-demo card dark"><div class="ed-step">02</div><p>Click any text on a slide. It's a normal text cursor now.</p></div>
+            <div class="edit-demo card dark"><div class="ed-step">03</div><p>Ctrl/Cmd+S saves it and downloads your edited deck.</p></div>
+          </div>
+          <p class="payoff reveal r5">It's your deck, so it should feel like <em>your</em> deck — not a hosted thing you have to ask someone to change.</p>
+        </div>
+        <div class="colophon"><span data-presenter></span><span class="folio">06 / 09</span></div>
+      </div>
+    </section>
+
+    <!-- ============================ 7 · WHY IT MATTERS ============================ -->
     <section class="slide">
       <div class="pad">
         <div class="masthead"><div class="wm" data-brand></div><div class="section">Why it matters</div></div>
@@ -288,48 +377,89 @@
           </div>
           <p class="lead reveal r4" style="margin-top:38px; font-size:24px;">Founders, operators, consultants — anyone who gets up in front of a room. <b>This is pipeline you're already leaving on the table.</b></p>
         </div>
-        <div class="colophon"><span>Why it matters</span><span class="folio">05 / 06</span></div>
+        <div class="colophon"><span>Why it matters</span><span class="folio">07 / 09</span></div>
       </div>
     </section>
 
-    <!-- ============================ 6 · MAKE IT YOURS (CTA) ============================ -->
+    <!-- ============================ 8 · TWO WAYS TO SET IT UP ============================ -->
+    <section class="slide">
+      <div class="pad">
+        <div class="masthead"><div class="wm" data-brand></div><div class="section">Setting it up</div></div>
+        <div class="rule"></div>
+        <div class="setup-stage">
+          <div class="kicker reveal r1">However you like to build</div>
+          <h1 class="reveal r2" style="font-size:60px; margin-top:22px;">Two ways to get <em>your own copy</em> running.</h1>
+          <div class="setup-row reveal r3">
+            <div class="setup-card card">
+              <div class="tag">Option 1</div>
+              <h3>Do it yourself — about 15 minutes</h3>
+              <ol class="setup-steps">
+                <li>Copy the template repo.</li>
+                <li>Edit one config file — your questions, your brand.</li>
+                <li>Deploy it to your own GitHub Pages.</li>
+              </ol>
+            </div>
+            <div class="setup-card card on-blue">
+              <div class="tag yellow">Option 2</div>
+              <h3>Point your AI at it</h3>
+              <p style="font-size:19px; line-height:1.55; color:rgba(250,248,242,.85);">Hand the template to Claude Code (or whatever you use) and let it read the config, ask you the right questions, and build your version for you.</p>
+            </div>
+          </div>
+          <p class="except reveal r4">Full steps in the README — nothing here is locked behind a call with me.</p>
+        </div>
+        <div class="colophon"><span>Setting it up</span><span class="folio">08 / 09</span></div>
+      </div>
+    </section>
+
+    <!-- ============================ 9 · FINAL (CTA) ============================ -->
     <section class="slide dark">
       <div class="pad">
-        <div class="masthead"><div class="wm" data-brand></div><div class="section">Make it yours</div></div>
+        <div class="masthead"><div class="wm" data-brand></div><div class="section">Take it with you</div></div>
         <div class="rule"></div>
-        <div class="s6-stage">
-          <div>
+        <div class="s9-stage">
+          <div class="s9-copy">
             <div class="kicker reveal r1" style="color:var(--yellow);">It's yours, not rented</div>
-            <h1 class="s6-headline reveal r2" style="margin-top:24px;">Want one for your<br>next talk?</h1>
+            <h1 class="s9-headline reveal r2">Take the template.<br>Run your own.</h1>
+            <p class="lead s9-sub reveal r3">Everything you just clicked through — the checkpoints, the room map, the edit mode — is one repo. Copy it, point it at your own talk, and it's yours.</p>
           </div>
-          <p class="lead s6-sub reveal r3">It runs on your own setup — your repo, your hosting. I built this one in an afternoon. I can hand you the template, or come run the whole thing at your event.</p>
-          <div class="cta-row reveal r4" id="ctaLinks"><!-- populated from config.js brand.links --></div>
-          <div class="taglinebig reveal r5" data-tagline></div>
+          <div class="s9-card card dark reveal r4">
+            <div class="s9-card-kicker">What you walk away with</div>
+            <ul class="s9-card-list">
+              <li>The full template repo — deck, companion, presenter</li>
+              <li>This exact demo as a worked example</li>
+              <li>A README that walks through both setup paths</li>
+            </ul>
+            <div class="s9-card-cta" id="ctaLinks"><!-- populated from config.js brand.links --></div>
+          </div>
         </div>
-        <div class="colophon"><span data-presenter></span><span class="folio">06 / 06</span></div>
+        <div class="colophon"><span data-presenter></span><span class="folio">09 / 09</span></div>
       </div>
     </section>
 
   </main>
 </div>
 <div class="progress" id="progress"></div>
-<div class="counter" id="counter">01 / 06</div>
+<div class="counter" id="counter">01 / 09</div>
+<div class="edit-hotzone" id="editHotzone"></div>
+<button class="edit-toggle" id="editToggle" title="Edit mode (E)">&#9998;</button>
+<div class="edit-banner" id="editBanner">Edit mode — click text to edit &middot; Ctrl/Cmd+S to save &middot; E to exit</div>
 
 <script>
 /* hydrate brand text from config.js (kept identical to the template engine) */
 (function(){
   var b = (window.DECK_CONFIG && window.DECK_CONFIG.brand) || {};
-  document.title = (b.name ? b.name + " — teaching deck" : "Deck");
+  document.title = (b.name ? b.name + " — teaching deck" : "Session");
   function fill(sel, val){ document.querySelectorAll(sel).forEach(function(el){ if(val) el.textContent = val; }); }
   fill("[data-brand]", b.name);
   fill("[data-tagline]", b.tagline);
   fill("[data-presenter]", b.presenter);
 
   /* CTA links on the closing slide — pulled from brand.links, not hardcoded.
-     Slide 6 is the outward "make it yours" CTA (book Nicholas / get the template),
-     so drop the internal app-navigation links (deck / companion / presenter) —
-     those have their own dedicated buttons earlier in the deck. The first
-     surviving link is promoted to the yellow primary. */
+     The final slide's card is the outward "take it with you" CTA (get the
+     template / see how it's built), so drop the internal app-navigation link
+     (presenter.html) — that has its own dedicated button earlier in the deck.
+     The first surviving link is promoted to the yellow primary; only one
+     primary is ever shown so the CTA stays unambiguous. */
   var wrap = document.getElementById('ctaLinks');
   if (wrap && Array.isArray(b.links)) {
     var outward = b.links.filter(function(link){
@@ -378,6 +508,7 @@ class SlidePresentation {
   }
   keys(){
     document.addEventListener('keydown', (e) => {
+      if(e.target && e.target.isContentEditable) return; // don't navigate while editing text
       if(e.metaKey||e.ctrlKey||e.altKey) return;
       switch(e.key){
         case 'ArrowRight': case 'ArrowDown': case ' ': case 'PageDown': e.preventDefault(); this.show(this.current+1); break;
@@ -402,6 +533,80 @@ class SlidePresentation {
   }
 }
 window.deck = new SlidePresentation();
+
+/* ===========================================
+   INLINE EDIT MODE — ported from the STO deck template.
+   E key / top-left hotzone toggles it. Content-editable slide areas.
+   Ctrl/Cmd+S persists to localStorage + downloads the edited HTML.
+
+   Difference from the template: the template disables editing on
+   github.io (view-only, published deck). THIS is a self-guided demo —
+   the whole point of this slide is for a visitor to try pressing E — so
+   edit mode stays ENABLED on the live host too. Edits are client-side/
+   localStorage only; nothing is ever sent anywhere, so it's harmless.
+   =========================================== */
+const EDIT_KEY = 'nicholaschong-deck-edits-v1';
+const editor = {
+  isActive: false,
+  regions(){ return document.querySelectorAll('.slide .pad'); },
+  toggleEditMode(){
+    this.isActive = !this.isActive;
+    document.body.classList.toggle('editing', this.isActive);
+    document.getElementById('editToggle').classList.toggle('active', this.isActive);
+    document.getElementById('editBanner').classList.toggle('on', this.isActive);
+    this.regions().forEach(r => r.setAttribute('contenteditable', this.isActive ? 'true' : 'false'));
+    if(!this.isActive) this.save(false);
+  },
+  save(download = true){
+    const edits = {};
+    this.regions().forEach((r,i) => { edits[i] = r.innerHTML; });
+    try{ localStorage.setItem(EDIT_KEY, JSON.stringify(edits)); }catch(e){}
+    if(download){
+      const doc = document.documentElement.cloneNode(true);
+      doc.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+      doc.querySelector('body').classList.remove('editing');
+      const blob = new Blob(['<!DOCTYPE html>\n' + doc.outerHTML], { type:'text/html' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'nicholaschong-deck-edited.html';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+  },
+  restore(){
+    let edits = null;
+    try{ edits = JSON.parse(localStorage.getItem(EDIT_KEY) || 'null'); }catch(e){}
+    if(!edits) return;
+    this.regions().forEach((r,i) => { if(edits[i] !== undefined) r.innerHTML = edits[i]; });
+  }
+};
+editor.restore();
+
+/* Edit toggle: button click, hotzone hover with grace period, hotzone click, E key */
+(function(){
+  const editToggle = document.getElementById('editToggle');
+  const hotzone = document.getElementById('editHotzone');
+  let hideTimeout = null;
+  editToggle.addEventListener('click', () => editor.toggleEditMode());
+  hotzone.addEventListener('mouseenter', () => { clearTimeout(hideTimeout); editToggle.classList.add('show'); });
+  hotzone.addEventListener('mouseleave', () => {
+    hideTimeout = setTimeout(() => { if(!editor.isActive) editToggle.classList.remove('show'); }, 400);
+  });
+  editToggle.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
+  editToggle.addEventListener('mouseleave', () => {
+    hideTimeout = setTimeout(() => { if(!editor.isActive) editToggle.classList.remove('show'); }, 400);
+  });
+  hotzone.addEventListener('click', () => editor.toggleEditMode());
+  document.addEventListener('keydown', (e) => {
+    if((e.key === 'e' || e.key === 'E') && !e.metaKey && !e.ctrlKey && !(e.target && e.target.isContentEditable)){
+      editor.toggleEditMode();
+    }
+    if((e.metaKey || e.ctrlKey) && e.key === 's' && editor.isActive){
+      e.preventDefault();
+      editor.save(true);
+    }
+  });
+})();
 </script>
 </body>
 </html>
