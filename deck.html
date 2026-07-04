@@ -207,19 +207,26 @@
   .setup-steps li::marker{ font-family:"Space Mono", var(--mono), monospace; font-weight:700; color:var(--blue); }
 
   /* ================================ SLIDE 9 · FINAL (CTA) ================================ */
-  .s9-stage{ flex:1; display:flex; align-items:center; gap:64px; }
-  .s9-copy{ flex:1; }
-  .s9-headline{ font-family:"Bricolage Grotesque", var(--serif), serif; font-weight:800; letter-spacing:-0.02em; line-height:1.02; color:var(--paper); font-size:78px; margin-top:22px; }
-  .s9-sub{ margin-top:22px; font-size:24px; max-width:640px; }
-  .s9-card{ flex:none; width:560px; padding:36px 38px 32px; display:flex; flex-direction:column; }
-  .s9-card-kicker{ font-family:"Space Mono", var(--mono), monospace; font-size:13px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--yellow); }
-  .s9-card-list{ margin:18px 0 0; padding-left:20px; font-size:18px; line-height:1.65; color:rgba(250,248,242,.85); }
-  .s9-card-list li::marker{ color:var(--yellow); }
-  .s9-card-list li + li{ margin-top:4px; }
-  .s9-card-cta{ margin-top:26px; display:flex; flex-direction:column; gap:12px; }
-  .s9-card-cta .btnlink{ justify-content:center; font-size:18px; padding:15px 22px; box-shadow:5px 5px 0 var(--yellow); }
-  .s9-card-cta .btnlink.ghost{ background:transparent; color:var(--paper); border-color:var(--paper); box-shadow:none; }
-  .s9-card-cta .btnlink.ghost:hover{ background:rgba(250,248,242,.08); transform:none; }
+  .s9-stage{ flex:1; display:flex; flex-direction:column; justify-content:center; gap:26px; max-width:1500px; }
+  .s9-headline{ font-family:"Bricolage Grotesque", var(--serif), serif; font-weight:800; letter-spacing:-0.02em; line-height:1.02; color:var(--paper); font-size:64px; margin-top:20px; }
+  .s9-sub{ margin-top:16px; font-size:21px; max-width:900px; }
+
+  .s9-steps{ display:flex; gap:34px; margin-top:6px; }
+  .s9-step{ display:flex; align-items:center; gap:12px; }
+  .s9-step-num{ flex:none; width:32px; height:32px; border-radius:50%; background:var(--yellow); color:var(--ink); border:var(--bw) solid var(--paper); display:flex; align-items:center; justify-content:center; font-family:"Space Mono", var(--mono), monospace; font-weight:700; font-size:15px; }
+  .s9-step-txt{ font-family:"Space Mono", var(--mono), monospace; font-size:15px; font-weight:700; letter-spacing:.02em; color:var(--paper); }
+  .s9-step-txt em{ font-style:normal; color:var(--yellow); }
+
+  .s9-promptbox{ position:relative; background:var(--ink); border:var(--bw) solid var(--yellow); box-shadow:10px 10px 0 var(--blue); padding:30px 34px 26px; }
+  .s9-promptbox-label{ font-family:"Space Mono", var(--mono), monospace; font-size:13px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--yellow); }
+  .s9-prompt-text{ margin-top:16px; font-family:"Space Mono", var(--mono), monospace; font-size:18px; line-height:1.65; color:rgba(250,248,242,.92); user-select:all; cursor:text; }
+  .s9-copybtn{ position:absolute; top:26px; right:30px; display:inline-flex; align-items:center; gap:8px; font-family:"Space Mono", var(--mono), monospace; font-weight:700; font-size:15px; letter-spacing:.04em; color:var(--ink); background:var(--yellow); border:var(--bw) solid var(--paper); box-shadow:4px 4px 0 var(--blue); padding:11px 18px; cursor:pointer; transition:transform .15s var(--ease), box-shadow .15s var(--ease); }
+  .s9-copybtn:hover{ transform:translate(2px,2px); box-shadow:2px 2px 0 var(--blue); }
+  .s9-copybtn.copied{ background:var(--paper); color:var(--blue); }
+
+  .s9-foot{ display:flex; align-items:center; justify-content:space-between; margin-top:4px; }
+  .s9-secondary{ font-family:"Space Mono", var(--mono), monospace; font-size:15px; color:rgba(250,248,242,.65); text-decoration:none; border-bottom:1.5px solid rgba(250,248,242,.35); transition:color .15s var(--ease), border-color .15s var(--ease); }
+  .s9-secondary:hover{ color:var(--paper); border-color:var(--paper); }
 
   /* ================================ LIVE Q&A FROM THE ROOM ================================ */
   .qa-fab{ position:fixed; left:26px; bottom:24px; z-index:1400; display:none; align-items:center; gap:12px;
@@ -485,19 +492,25 @@
         <div class="masthead"><div class="wm" data-brand></div><div class="section">Take it with you</div></div>
         <div class="rule"></div>
         <div class="s9-stage">
-          <div class="s9-copy">
-            <div class="kicker reveal r1" style="color:var(--yellow);">It's yours, not rented</div>
-            <h1 class="s9-headline reveal r2">Take the template.<br>Run your own.</h1>
-            <p class="lead s9-sub reveal r3">Everything you just clicked through — the checkpoints, the room map, the edit mode — is one repo. Copy it, point it at your own talk, and it's yours.</p>
+          <div class="kicker reveal r1" style="color:var(--yellow);">It's yours, not rented</div>
+          <h1 class="s9-headline reveal r2">Take the template.<br>Run your own.</h1>
+          <p class="lead s9-sub reveal r3">Copy the prompt below into Claude Code. It reads the template, asks you a few questions, and builds your version — Supabase, checkpoints, slides, and a live link — while you watch.</p>
+
+          <div class="s9-steps reveal r3">
+            <div class="s9-step"><div class="s9-step-num">1</div><div class="s9-step-txt">Install <em>frontend-slides</em> — github.com/zarazhangrui/frontend-slides</div></div>
+            <div class="s9-step"><div class="s9-step-num">2</div><div class="s9-step-txt">Open Claude Code on <em>Opus</em></div></div>
+            <div class="s9-step"><div class="s9-step-num">3</div><div class="s9-step-txt">Paste this</div></div>
           </div>
-          <div class="s9-card card dark reveal r4">
-            <div class="s9-card-kicker">What you walk away with</div>
-            <ul class="s9-card-list">
-              <li>The full template repo — deck, companion, presenter</li>
-              <li>This exact demo as a worked example</li>
-              <li>A README that walks through both setup paths</li>
-            </ul>
-            <div class="s9-card-cta" id="ctaLinks"><!-- populated from config.js brand.links --></div>
+
+          <div class="s9-promptbox reveal r4">
+            <div class="s9-promptbox-label">Copy this into Claude Code</div>
+            <button class="s9-copybtn" id="s9CopyBtn" type="button">Copy</button>
+            <p class="s9-prompt-text" id="s9PromptText">Set me up with my own version of this — a talk that turns my audience into captured leads. Use the template at github.com/ncih/deck-template: clone it, then walk me through everything step by step — set up my free Supabase, write my checkpoint questions, build my slide deck, and deploy it to my own GitHub Pages. I'm non-technical, so explain each step simply and do the technical parts for me.</p>
+          </div>
+
+          <div class="s9-foot reveal r4">
+            <span></span>
+            <a class="s9-secondary" href="https://github.com/ncih/deck-template" target="_blank" rel="noopener">Rather do it by hand? →</a>
           </div>
         </div>
         <div class="colophon"><span data-presenter></span><span class="folio">09 / 09</span></div>
@@ -536,27 +549,47 @@
   fill("[data-tagline]", b.tagline);
   fill("[data-presenter]", b.presenter);
 
-  /* CTA links on the closing slide — pulled from brand.links, not hardcoded.
-     The final slide's card is the outward "take it with you" CTA (get the
-     template / see how it's built), so drop the internal app-navigation link
-     (presenter.html) — that has its own dedicated button earlier in the deck.
-     The first surviving link is promoted to the yellow primary; only one
-     primary is ever shown so the CTA stays unambiguous. */
-  var wrap = document.getElementById('ctaLinks');
-  if (wrap && Array.isArray(b.links)) {
-    var outward = b.links.filter(function(link){
-      return !/(deck|index|presenter)\.html(#|$)/.test(link.href || '#');
-    });
-    outward.forEach(function(link, i){
-      var href = link.href || '#';
-      var a = document.createElement('a');
-      a.className = 'btnlink' + (i === 0 ? ' yellow' : ' ghost');
-      a.href = href;
-      a.textContent = link.label || 'Learn more';
-      if (href && href !== '#') { a.target = '_blank'; a.rel = 'noopener'; }
-      wrap.appendChild(a);
-    });
-  }
+})();
+
+/* Slide 9 — copy-the-prompt button. Tries the async Clipboard API first,
+   with an execCommand fallback for older/blocked contexts. The "Copied!"
+   state fires as soon as EITHER path settles, and a short safety timeout
+   guarantees feedback even if a browser leaves the clipboard promise
+   pending indefinitely (e.g. a stalled permission prompt) — the text is
+   also selectable by hand either way. */
+(function(){
+  var btn = document.getElementById('s9CopyBtn');
+  var text = document.getElementById('s9PromptText');
+  if (!btn || !text) return;
+  btn.addEventListener('click', function(){
+    var value = text.textContent;
+    var done = false;
+    function showCopied(){
+      if (done) return;
+      done = true;
+      var original = 'Copy';
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(function(){ btn.textContent = original; btn.classList.remove('copied'); }, 1800);
+    }
+
+    /* Fallback: select the text + execCommand, so it's copied (and at
+       least selected) regardless of what the async API does. */
+    try {
+      var range = document.createRange();
+      range.selectNodeContents(text);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      document.execCommand('copy');
+    } catch (e) {}
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(value).then(showCopied, showCopied);
+    }
+    /* Never leave the button silent — even if writeText hangs forever. */
+    setTimeout(showCopied, 400);
+  });
 })();
 
 /* QR placeholder on slide 3 — a real scannable PNG is dropped into #deck-qr's
