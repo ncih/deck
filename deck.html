@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>nicholaschong.xyz — turn the room into leads</title>
+<title>Presenter Kit — turn the room into leads</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -165,6 +165,19 @@
   .keycap{ display:inline-block; font-family:"Space Mono", var(--mono), monospace; font-weight:700; background:var(--ink); color:var(--paper); border-radius:4px; padding:1px 9px; font-style:normal; }
   .dark .keycap{ background:var(--yellow); color:var(--ink); }
 
+  /* ================================ SLIDE · LIVE Q&A (ask → land on the deck) ================================ */
+  .qas-stage{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .qas-demo{ margin-top:44px; display:flex; align-items:center; gap:30px; flex-wrap:wrap; }
+  .qas-pill{ display:inline-flex; align-items:center; gap:12px; padding:14px 22px 14px 18px; border:var(--bw) solid var(--ink); border-radius:999px; background:var(--ink); color:var(--paper); font-family:"Space Mono", var(--mono), monospace; font-size:15px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; box-shadow:5px 5px 0 var(--yellow); flex:none; }
+  .qas-pill .qas-dot{ position:relative; width:11px; height:11px; border-radius:50%; background:var(--yellow); flex:none; }
+  .qas-pill .qas-dot::after{ content:""; position:absolute; inset:-5px; border-radius:50%; border:2px solid var(--yellow); animation:qa-pulse 2s ease-out infinite; }
+  .qas-pill .qas-num{ font-family:"Bricolage Grotesque", var(--serif), serif; font-weight:800; font-size:16px; }
+  .qas-arrow{ font-family:"Space Mono", var(--mono), monospace; font-size:36px; color:var(--blue); font-weight:700; flex:none; }
+  .qas-card{ flex:1; min-width:380px; background:var(--paper); border:var(--bw) solid var(--ink); box-shadow:8px 8px 0 var(--blue); padding:28px 32px; }
+  .qas-q{ font-family:"Bricolage Grotesque", var(--serif), serif; font-weight:700; font-size:30px; line-height:1.25; color:var(--ink); }
+  .qas-who{ margin-top:14px; font-family:"Space Mono", var(--mono), monospace; font-size:15px; letter-spacing:.04em; color:var(--muted); }
+  .qas-who b{ color:var(--blue); font-weight:700; }
+
   /* ================================ SLIDE 5 · CHECKPOINTS RUN THROUGHOUT ================================ */
   .cp-stage{ flex:1; display:flex; flex-direction:column; justify-content:center; }
   .cp-timeline{ margin-top:48px; display:flex; align-items:flex-start; max-width:1300px; }
@@ -197,15 +210,6 @@
   .pieces-note{ margin-top:34px; font-size:22px; color:var(--ink); font-weight:600; }
   .pieces-note em{ font-style:normal; color:var(--blue); }
 
-  /* ================================ SLIDE 8 · TWO WAYS TO SET IT UP ================================ */
-  .setup-stage{ flex:1; display:flex; flex-direction:column; justify-content:center; }
-  .setup-row{ display:flex; gap:32px; margin-top:40px; align-items:stretch; }
-  .setup-card{ flex:1; padding:32px 30px; display:flex; flex-direction:column; gap:14px; align-items:flex-start; }
-  .setup-card h3{ font-family:"Bricolage Grotesque", var(--serif), serif; font-weight:800; font-size:25px; color:var(--ink); }
-  .setup-card.on-blue h3{ color:var(--paper); }
-  .setup-steps{ margin:0; padding-left:22px; font-size:18px; color:var(--muted); line-height:1.7; }
-  .setup-steps li::marker{ font-family:"Space Mono", var(--mono), monospace; font-weight:700; color:var(--blue); }
-
   /* ================================ SLIDE 9 · FINAL (CTA) ================================ */
   .s9-stage{ flex:1; display:flex; flex-direction:column; justify-content:center; gap:26px; max-width:1500px; }
   .s9-headline{ font-family:"Bricolage Grotesque", var(--serif), serif; font-weight:800; letter-spacing:-0.02em; line-height:1.02; color:var(--paper); font-size:64px; margin-top:20px; }
@@ -224,8 +228,10 @@
   .s9-copybtn:hover{ transform:translate(2px,2px); box-shadow:2px 2px 0 var(--blue); }
   .s9-copybtn.copied{ background:var(--paper); color:var(--blue); }
 
-  .s9-foot{ display:flex; align-items:center; justify-content:space-between; margin-top:4px; }
-  .s9-secondary{ font-family:"Space Mono", var(--mono), monospace; font-size:15px; color:rgba(250,248,242,.65); text-decoration:none; border-bottom:1.5px solid rgba(250,248,242,.35); transition:color .15s var(--ease), border-color .15s var(--ease); }
+  .s9-foot{ display:flex; align-items:center; justify-content:space-between; gap:28px; margin-top:4px; flex-wrap:wrap; }
+  .s9-nexttime{ font-family:"Space Mono", var(--mono), monospace; font-size:14px; line-height:1.5; color:rgba(250,248,242,.6); max-width:720px; }
+  .s9-nexttime em{ font-style:normal; color:var(--yellow); }
+  .s9-secondary{ flex:none; font-family:"Space Mono", var(--mono), monospace; font-size:15px; color:rgba(250,248,242,.65); text-decoration:none; border-bottom:1.5px solid rgba(250,248,242,.35); transition:color .15s var(--ease), border-color .15s var(--ease); }
   .s9-secondary:hover{ color:var(--paper); border-color:var(--paper); }
 
   /* ================================ LIVE Q&A FROM THE ROOM ================================ */
@@ -330,7 +336,7 @@
             <p class="lead s3-sub reveal r3">Open the companion on your phone, or right here in a tab. Register, run the checkpoints, tell me what you actually think. I'll show you the other side in a second.</p>
             <div class="s3-cta reveal r4">
               <a class="btnlink big" href="index.html" target="_blank" rel="noopener">Open the companion →</a>
-              <span class="s3-url">deck.nicholaschong.xyz/index.html</span>
+              <span class="s3-url">presenter-kit.nicholaschong.xyz/index.html</span>
             </div>
           </div>
           <div class="s3-qr-wrap reveal r4">
@@ -338,14 +344,14 @@
               <!-- QR PLACEHOLDER: a real scannable PNG gets dropped into this <img> at
                    deploy time. data-qr-url is the exact string it must encode. Until
                    then the .qr-ph fallback shows (img has no src, so it stays hidden). -->
-              <img id="deck-qr" src="deck-qr.svg" alt="Scan to join the companion" data-qr-url="https://deck.nicholaschong.xyz/index.html">
+              <img id="deck-qr" src="deck-qr.svg" alt="Scan to join the companion" data-qr-url="https://presenter-kit.nicholaschong.xyz/index.html">
               <div class="qr-ph" id="deck-qr-ph">
                 <div class="glyph">&#9633;</div>
                 <div class="lab">QR → the companion</div>
                 <div class="note">real code dropped in at deploy</div>
               </div>
             </div>
-            <div class="qr-caption">Scan to join, or use the link.<br>deck.nicholaschong.xyz/index.html</div>
+            <div class="qr-caption">Scan to join, or use the link.<br>presenter-kit.nicholaschong.xyz/index.html</div>
           </div>
         </div>
         <div class="colophon"><span>Your turn</span><span class="folio">03 / 09</span></div>
@@ -365,13 +371,35 @@
             <a class="btnlink yellow big" href="presenter.html" target="_blank" rel="noopener">Open the room map →</a>
           </div>
           <p class="payoff reveal r5">And here's the quiet part: to answer, you registered. So <em>you — and everyone who showed up — just became a lead.</em></p>
-          <p class="nudge reveal r6">One more thing while you're in there — tap <b>Ask a question</b> on your phone and send something. Watch it land on the room map, live, with your name on it.</p>
         </div>
         <div class="colophon"><span data-presenter></span><span class="folio">04 / 09</span></div>
       </div>
     </section>
 
-    <!-- ============================ 5 · CHECKPOINTS RUN THROUGHOUT ============================ -->
+    <!-- ============================ 5 · LIVE Q&A (ask → land on the deck) ============================ -->
+    <section class="slide">
+      <div class="pad">
+        <div class="masthead"><div class="wm" data-brand></div><div class="section">The two-way part</div></div>
+        <div class="rule"></div>
+        <div class="qas-stage">
+          <div class="kicker reveal r1">It goes both ways</div>
+          <h1 class="reveal r2" style="font-size:62px; margin-top:22px;">Ask something.<br><em>Watch it land — live.</em></h1>
+          <p class="lead reveal r3" style="margin-top:20px; font-size:26px; max-width:1180px;">On your phone, tap <b>Ask a question</b> and send it. It drops straight onto this deck — hit <b>Questions from the room</b> (bottom-left) to see everything the room's asked, with names.</p>
+          <div class="qas-demo reveal r4">
+            <div class="qas-pill"><span class="qas-dot"></span>Questions from the room<span class="qas-num">7</span></div>
+            <div class="qas-arrow">&rarr;</div>
+            <div class="qas-card">
+              <div class="qas-q">&ldquo;How's this different from just using Slido?&rdquo;</div>
+              <div class="qas-who">asked by <b>Priya</b> &middot; just now</div>
+            </div>
+          </div>
+          <p class="except reveal r5" style="margin-top:32px;">No hands up, no mic passed around — <em>every question captured, while you keep talking.</em></p>
+        </div>
+        <div class="colophon"><span>The two-way part</span><span class="folio">05 / 09</span></div>
+      </div>
+    </section>
+
+    <!-- ============================ 6 · CHECKPOINTS RUN THROUGHOUT ============================ -->
     <section class="slide">
       <div class="pad">
         <div class="masthead"><div class="wm" data-brand></div><div class="section">Not a form at the end</div></div>
@@ -389,7 +417,7 @@
           </div>
           <p class="except reveal r5" style="margin-top:34px;">Their phones just sit there and wait — a checkpoint unlocks the second I open it from the room map, <em>right when it's relevant.</em></p>
         </div>
-        <div class="colophon"><span>Not a form at the end</span><span class="folio">05 / 09</span></div>
+        <div class="colophon"><span>Not a form at the end</span><span class="folio">06 / 09</span></div>
       </div>
     </section>
 
@@ -409,7 +437,7 @@
           </div>
           <p class="payoff reveal r5">It's your deck, so it should feel like <em>your</em> deck — not a hosted thing you have to ask someone to change.</p>
         </div>
-        <div class="colophon"><span data-presenter></span><span class="folio">06 / 09</span></div>
+        <div class="colophon"><span data-presenter></span><span class="folio">07 / 09</span></div>
       </div>
     </section>
 
@@ -423,66 +451,36 @@
           <h1 class="reveal r2" style="font-size:62px; margin-top:22px;">Every talk ships with <em>three pieces.</em></h1>
           <p class="lead reveal r3" style="margin-top:18px; font-size:24px;">All three are live in this demo — open any of them.</p>
           <div class="pieces-list reveal r4">
-            <a class="piece-row card" href="deck.html" target="_blank" rel="noopener">
+            <a class="piece-row card" href="https://presenter-kit.nicholaschong.xyz/deck.html" target="_blank" rel="noopener">
               <div class="piece-num">01</div>
               <div class="piece-body">
                 <h3>The deck</h3>
                 <p>Your slides — what you're looking at right now.</p>
-                <div class="piece-url">deck.nicholaschong.xyz/deck.html</div>
+                <div class="piece-url">presenter-kit.nicholaschong.xyz/deck.html</div>
               </div>
               <div class="piece-cta">Open the deck →</div>
             </a>
-            <a class="piece-row card on-blue" href="index.html" target="_blank" rel="noopener">
-              <div class="piece-num" style="color:var(--yellow);">02</div>
+            <a class="piece-row card" href="https://presenter-kit.nicholaschong.xyz/index.html" target="_blank" rel="noopener">
+              <div class="piece-num">02</div>
               <div class="piece-body">
                 <h3>The audience companion</h3>
                 <p>What the room opens on their phones.</p>
-                <div class="piece-url" style="color:var(--yellow);">deck.nicholaschong.xyz/index.html</div>
+                <div class="piece-url">presenter-kit.nicholaschong.xyz/index.html</div>
               </div>
-              <div class="piece-cta" style="box-shadow:5px 5px 0 var(--yellow);">Open the companion →</div>
+              <div class="piece-cta">Open the companion →</div>
             </a>
-            <a class="piece-row card" href="presenter.html" target="_blank" rel="noopener">
+            <a class="piece-row card" href="https://presenter-kit.nicholaschong.xyz/presenter.html" target="_blank" rel="noopener">
               <div class="piece-num">03</div>
               <div class="piece-body">
                 <h3>The presenter view</h3>
                 <p>Your live room-map and Q&amp;A while you talk.</p>
-                <div class="piece-url">deck.nicholaschong.xyz/presenter.html</div>
+                <div class="piece-url">presenter-kit.nicholaschong.xyz/presenter.html</div>
               </div>
               <div class="piece-cta">Open the room map →</div>
             </a>
           </div>
         </div>
-        <div class="colophon"><span>What you just used</span><span class="folio">07 / 09</span></div>
-      </div>
-    </section>
-
-    <!-- ============================ 8 · TWO WAYS TO SET IT UP ============================ -->
-    <section class="slide">
-      <div class="pad">
-        <div class="masthead"><div class="wm" data-brand></div><div class="section">Setting it up</div></div>
-        <div class="rule"></div>
-        <div class="setup-stage">
-          <div class="kicker reveal r1">However you like to build</div>
-          <h1 class="reveal r2" style="font-size:60px; margin-top:22px;">Two ways to get <em>your own copy</em> running.</h1>
-          <div class="setup-row reveal r3">
-            <div class="setup-card card">
-              <div class="tag">Option 1</div>
-              <h3>Do it yourself — about 15 minutes</h3>
-              <ol class="setup-steps">
-                <li>Copy the template repo.</li>
-                <li>Edit one config file — your questions, your brand.</li>
-                <li>Deploy it to your own GitHub Pages.</li>
-              </ol>
-            </div>
-            <div class="setup-card card on-blue">
-              <div class="tag yellow">Option 2</div>
-              <h3>Point your AI at it</h3>
-              <p style="font-size:19px; line-height:1.55; color:rgba(250,248,242,.85);">Hand the template to Claude Code (or whatever you use) and let it read the config, ask you the right questions, and build your version for you.</p>
-            </div>
-          </div>
-          <p class="except reveal r4">Full steps in the README — nothing here is locked behind a call with me.</p>
-        </div>
-        <div class="colophon"><span>Setting it up</span><span class="folio">08 / 09</span></div>
+        <div class="colophon"><span>What you just used</span><span class="folio">08 / 09</span></div>
       </div>
     </section>
 
@@ -497,19 +495,18 @@
           <p class="lead s9-sub reveal r3">Copy the prompt below into Claude Code. It reads the template, asks you a few questions, and builds your version — Supabase, checkpoints, slides, and a live link — while you watch.</p>
 
           <div class="s9-steps reveal r3">
-            <div class="s9-step"><div class="s9-step-num">1</div><div class="s9-step-txt">Install <em>frontend-slides</em> — github.com/zarazhangrui/frontend-slides</div></div>
-            <div class="s9-step"><div class="s9-step-num">2</div><div class="s9-step-txt">Open Claude Code on <em>Opus</em></div></div>
-            <div class="s9-step"><div class="s9-step-num">3</div><div class="s9-step-txt">Paste this</div></div>
+            <div class="s9-step"><div class="s9-step-num">1</div><div class="s9-step-txt">Open Claude Code on <em>Opus</em></div></div>
+            <div class="s9-step"><div class="s9-step-num">2</div><div class="s9-step-txt">Paste this &darr;</div></div>
           </div>
 
           <div class="s9-promptbox reveal r4">
             <div class="s9-promptbox-label">Copy this into Claude Code</div>
             <button class="s9-copybtn" id="s9CopyBtn" type="button">Copy</button>
-            <p class="s9-prompt-text" id="s9PromptText">Set me up with my own version of this — a talk that turns my audience into captured leads. Use the template at github.com/ncih/deck-template: clone it, then walk me through everything step by step — set up my free Supabase, write my checkpoint questions, build my slide deck, and deploy it to my own GitHub Pages. I'm non-technical, so explain each step simply and do the technical parts for me.</p>
+            <p class="s9-prompt-text" id="s9PromptText">Set me up with my own version of this — a talk that turns my audience into captured leads. Use the template at github.com/ncih/deck-template: clone it, then set yourself up end to end — install the frontend-slides skill (git clone https://github.com/zarazhangrui/frontend-slides into ~/.claude/skills/) and the presenter-kit skill that ships in the template, create my free Supabase, write my checkpoint questions, build my slide deck, and deploy it to my own GitHub Pages. I'm non-technical, so explain each step simply and do the technical parts for me. When it's live, show me how to run /presenter-kit to spin up my next talk.</p>
           </div>
 
           <div class="s9-foot reveal r4">
-            <span></span>
+            <span class="s9-nexttime">Next time it's one command — the setup installs a <em>/presenter-kit</em> skill you run to build your next talk.</span>
             <a class="s9-secondary" href="https://github.com/ncih/deck-template" target="_blank" rel="noopener">Rather do it by hand? →</a>
           </div>
         </div>

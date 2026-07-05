@@ -40,16 +40,18 @@ window.DECK_CONFIG = {
 
   /* ---- Brand + links -------------------------------------------------------*/
   brand: {
-    name:       "nicholaschong.xyz",
+    name:       "Presenter Kit",
     tagline:    "Turn the room you just presented to into leads.",
     presenter:  "Nicholas",                 // used in gate/waiting copy
     logo:       "brand-logo.svg",            // dark logo (attendee, light bg)
     logoWhite:  "brand-logo.svg",            // light logo (dark bg: card head, presenter)
-    // shown on the finale card end-screen + the deck's closing slide:
+    // shown on the finale card end-screen (the ACTUAL attendee's view). This is
+    // the audience take-away: the slides themselves + a way to reach the speaker.
+    // (The "get the template" path lives on the deck's closing slide, not here —
+    // that's a builder action, not an attendee one.)
     links: [
-      { label: "See the room →",         href: "presenter.html", primary: true },
-      { label: "Get the template →",     href: "https://github.com/ncih/deck-template", primary: false },
-      { label: "See how it's built →",   href: "https://github.com/ncih/deck", primary: false }
+      { label: "Get the slides →",        href: "deck.html", primary: true },
+      { label: "Connect with Nicholas →", href: "https://nicholaschong.xyz", primary: false }
     ]
   },
 
@@ -137,7 +139,7 @@ window.DECK_CONFIG = {
     kicker:"That's the trick", cp:"You're a lead now",
     title:"You're now a lead <em>in my pipeline.</em>",
     cardLabel:"Your summary card",
-    passLabel:"nicholaschong.xyz · you just tried it",
+    passLabel:"Presenter Kit · you just tried it",
     /* which flow answers to print on the card, top to bottom
        (cp4 is open text — it's in the room feed, not on the card): */
     stops:[
@@ -149,13 +151,13 @@ window.DECK_CONFIG = {
     /* recap = the line printed on the summary card itself; note = the sign-off
        shown after they tap Done. Kept separate so nothing repeats. */
     recap:"That's the trick. You answered a few questions, and now you're a qualified lead in my table — sorted by what you actually said.",
-    note:"Every talk you give could do exactly this. <b>See the room to watch your answer land.</b>",
+    note:"That's the whole loop — you just tried it from the inside. <b>Take the slides with you, and let's keep talking.</b>",
     footer:"turn the room into leads"
   },
 
   /* ---- Presenter live view -------------------------------------------------*/
   presenter: {
     title:"Live Room Map",
-    footer:"nicholaschong.xyz · live audience view"
+    footer:"Presenter Kit · live audience view"
   }
 };
